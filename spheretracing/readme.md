@@ -23,13 +23,7 @@
 	1. Change line i; start with the y multiplier;
 	1. This is not a valid distance field; note the artifacts;
 	1. Change line ii, for a different location based color;
-
 1. [shadertoy/TheRoadToHell.glsl](../shadertoy/TheRoadToHell.glsl)
 1. [sphereTracingShadows.glsl](sphereTracingShadows.glsl)
-
-
-
-
-
-1. [sphere tracing water.glsl](sphere tracing water.glsl)
+1. [sphereTracingWater.glsl](sphereTracingWater.glsl)
 	1. Look through code together
