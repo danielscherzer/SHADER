@@ -2,7 +2,7 @@
 #version 110
 
 vec2 random2( vec2 p ) {
-    return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);
+	return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);
 }
 
 uniform vec2 iResolution;
@@ -13,14 +13,14 @@ float time = iGlobalTime;
 
 void main() {
 	//coordinates in range [0,1]
-    vec2 coord = gl_FragCoord.xy/iResolution;
+	vec2 coord = gl_FragCoord.xy/iResolution;
 
-    // Scale 
-    coord *= 15.0;
+	// Scale 
+	coord *= 15.0;
 
-    // Tile the space
-    vec2 cell = floor(coord);
-    vec2 coordFract = fract(coord);
+	// Tile the space
+	vec2 cell = floor(coord);
+	vec2 coordFract = fract(coord);
 	
 	float minDist = 1e4;
 	for (int y= -1; y <= 1; ++y) 
@@ -39,6 +39,6 @@ void main() {
 	}
 	
 	vec3 color = vec3(minDist);
-		
-    gl_FragColor = vec4(color, 1.0);
+
+	gl_FragColor = vec4(color, 1.0);
 }
