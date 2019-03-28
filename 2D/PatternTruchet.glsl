@@ -27,15 +27,15 @@ float circles(vec2 coord)
 
 vec2 rotate2D(vec2 coord, float angle)
 {
-    mat2 rot =  mat2(cos(angle),-sin(angle), sin(angle),cos(angle));
-    return rot * coord;
+	mat2 rot =  mat2(cos(angle),-sin(angle), sin(angle),cos(angle));
+	return rot * coord;
 }
 
-///map coordinates to angles 0°,90°,180°, 270°
+//map coordinates to angles 0°,90°,180°, 270°
 float angle(vec2 coord)
 {
-    float index = trunc(mod(coord.x, 5)) * 3;
-    index += trunc(mod(coord.y, 3)) * 7;
+	float index = trunc(mod(coord.x, 5)) * 3;
+	index += trunc(mod(coord.y, 3)) * 7;
 	return trunc(mod(index, 4)) * 0.5 * PI;
 }
 
@@ -52,22 +52,26 @@ vec2 repeatAndRotate(vec2 coord, float scale, float timeScale)
 	return coord;
 }
 
-void main() {
+out vec4 outColor;
+
+void main() 
+{
 	//coordinates in range [0,1]
-    vec2 coord = gl_FragCoord.xy/iResolution;
+	vec2 coord = gl_FragCoord.xy/iResolution;
 	
 	coord.x *= iResolution.x / iResolution.y; //aspect
 	
-	// coord = repeatAndRotate(coord, 3, 0.21);
-	// coord = repeatAndRotate(coord, 4, 0.1); //rekursive pattern
-	// coord = repeatAndRotate(coord, 4, 0.1); //rekursive pattern
+//	coord = repeatAndRotate(coord, 3, 0.21);
+//	coord = repeatAndRotate(coord, 4, 0.1); //recursive pattern
+//	coord = repeatAndRotate(coord, 4, 0.1); //recursive pattern
 
 	float grid = triangle(coord, 0.01);
-	// grid = diagonal(coord, 0.05);
-	// grid = circles(coord);
+//	grid = diagonal(coord, 0.05);
+//	grid = circles(coord);
 
 	const vec3 white = vec3(1);
 	vec3 color = (1 - grid) * white;
-		
-    gl_FragColor = vec4(color, 1.0);
+
+	outColor = vec4(color, 1);
 }
+

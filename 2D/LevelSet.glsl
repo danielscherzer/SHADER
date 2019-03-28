@@ -13,7 +13,7 @@ float rand(float seed)
 }
 
 vec2 random2( vec2 p ) {
-    return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);
+	return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);
 }
 
 float distCircles(vec2 uv)
@@ -70,6 +70,13 @@ float distField(vec2 coord)
 		minDist = smin(distance(coord, point) * 40, minDist, 01.1);
 	}
 	return minDist;
+}
+
+//distance to nearest integer
+float distToInt(float coord)
+{
+	float dist = fract(coord);
+	return dist > 0.5 ? 1 - dist : dist;
 }
 
 void main()

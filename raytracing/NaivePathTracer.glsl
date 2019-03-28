@@ -277,3 +277,4 @@ void main()
 	color = pow( clamp(color, 0.0, 1.0), vec3(0.45) ); //gamma correction
     gl_FragColor = vec4( color, 1.0 );
 }
+

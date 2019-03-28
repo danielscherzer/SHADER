@@ -1,7 +1,7 @@
 ﻿#version 330
-/// motivation : https://www.shadertoy.com/view/XsXXDn
-/// idea from https://thebookofshaders.com/05/ nice explanation + links to function tools
-/// look at http://www.cdglabs.org/Shadershop/ for visual function composing
+// motivation : https://www.shadertoy.com/view/XsXXDn
+// idea from https://thebookofshaders.com/05/ nice explanation + links to function tools
+// look at http://www.cdglabs.org/Shadershop/ for visual function composing
 
 #include "../libs/Noise.glsl"
 #include "../libs/operators.glsl"
@@ -15,8 +15,8 @@ const float PI = 3.14159265359;
 const float TWOPI = 2 * PI;
 const float EPSILON = 10e-4;
 
-/// maps normalized [0..1] coordinates 
-/// into range [lowerLeft, upperRight]
+// maps normalized [0..1] coordinates 
+// into range [lowerLeft, upperRight]
 vec2 map(vec2 coord01, vec2 lowerLeft, vec2 upperRight)
 {
 	vec2 extents = upperRight - lowerLeft;
@@ -60,19 +60,19 @@ float onAxis(vec2 coord, vec2 screenDelta)
 
 float function(float x)
 {
-    float y = x;
-	 // y = sin(x);
-	// y = step(-2, x) ;
-	// y = smoothstep(-3, 3, x);
-	// y = mod(x, 4);
-	// y = fract(x); // return only the fraction part of a number
-	// y = ceil(x);  // nearest integer that is greater than or equal to x
-	// y = floor(x); // nearest integer less than or equal to x
+	float y = x;
+	 y = abs(x);   // return the absolute value of x
+	 y = min(0.0,x);   // return the lesser of x and 0.0
+	 y = max(0.0,x);   // return the greater of x and 0.0 
+	 y = step(2, x) ;
+//	 y = smoothstep(-1, -0.9, x);
+//	 y = fract(x); // return only the fraction part of a number
+//	 y = mod(x, 2);
+//	y = clamp(x,0.0,1.0); // constrain x to lie between 0.0 and 1.0
+//	 y = ceil(x);  // nearest integer that is greater than or equal to x
+//	 y = floor(x); // nearest integer less than or equal to x
+	  y = sin(2*x)* 2;
 	// y = sign(x);  // extract the sign of x
-	// y = abs(x);   // return the absolute value of x
-	//y = clamp(x,0.0,1.0); // constrain x to lie between 0.0 and 1.0
-	// y = min(0.0,x);   // return the lesser of x and 0.0
-	// y = max(0.0,x);   // return the greater of x and 0.0 
 	// y = trunc(x);
 	// y = abs(sin(x));
 	// y = fract(sin(x) * 1.0);
@@ -100,7 +100,7 @@ float function(float x)
 	return y;
 }
 
-//draw function line		
+//draw function line
 float plotFunction(vec2 coord, vec2 screenDelta)
 {
 	float dist = abs(function(coord.x) - coord.y);
@@ -128,12 +128,13 @@ float plotDifferentiableFunction(vec2 coord, vec2 screenDelta)
 
 void main() {
 	//map coordinates in range [0,1]
-    vec2 coord01 = gl_FragCoord.xy/iResolution;
+	vec2 coord01 = gl_FragCoord.xy/iResolution;
 	//screen aspect
 	float aspect = 1;//iResolution.x / iResolution.y;
 	//coordinate system corners
-	vec2 lowerLeft = vec2(-10 * aspect, -10);
-	vec2 upperRight = vec2(10 * aspect, 10);
+	float delta = 3;
+	vec2 lowerLeft = vec2(-delta * aspect, -delta);
+	vec2 upperRight = vec2(delta * aspect, delta);
 	//setup coordinate system
 	vec2 coord = map(coord01, lowerLeft, upperRight);
 	//calculate just visible screen deltas
@@ -147,12 +148,12 @@ void main() {
 	color *= gridColor;
 	
 	//function
-    // float graph = plotDifferentiableFunction(coord, 4 * screenDelta);
-    float graph = plotFunction(coord, 4 * screenDelta);
+//	float graph = plotDifferentiableFunction(coord, 4 * screenDelta);
+	float graph = plotFunction(coord, 4 * screenDelta);
 
-    // combine
+	// combine
 	const vec3 green = vec3(0.0, 1.0, 0.0);
 	color = mix(color, green, graph);
 
-    gl_FragColor = vec4(color, 1.0);
+	gl_FragColor = vec4(color, 1.0);
 }

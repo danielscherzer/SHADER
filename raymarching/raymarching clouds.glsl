@@ -2,7 +2,7 @@
 
 #include "../libs/camera.glsl" 
 #include "../libs/rayIntersections.glsl" 
-// #include "../libs/noise3D.glsl" //uncomment for simplex noise: slower but more "fractal"
+//#include "../libs/noise3D.glsl" //uncomment for simplex noise: slower but more "fractal"
 
 uniform float iGlobalTime;
 uniform vec2 iResolution;
@@ -116,13 +116,15 @@ vec3 render(const Ray ray)
     return col;
 }
 
+out vec4 colorOut;
+
 void main()
 {
 	vec3 camP = calcCameraPos();
 	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
 
     vec3 color = render( Ray( camP, camDir ) );
-    gl_FragColor = vec4(color, 1.0 );
+    colorOut = vec4(color, 1.0 );
 }
 
 

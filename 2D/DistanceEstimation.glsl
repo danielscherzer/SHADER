@@ -1,6 +1,6 @@
 #version 330
 
-///based on http://www.iquilezles.org/www/articles/distance/distance.htm
+// based on http://www.iquilezles.org/www/articles/distance/distance.htm
 const float PI = 3.14159265359;
 const float TWOPI = 2 * PI;
 const float EPSILON = 10e-4;
@@ -17,25 +17,25 @@ float distToInt(float coord)
 
 float distField(const vec2 coord)
 {
-// return distance(vec2(0.5), coord);
+//	return distance(vec2(0.5), coord);
 	//cartesian to polar coordinates
-    float r = length(coord); // radius of current pixel
-    float a = atan(coord.y, coord.x) + PI; //angel of current pixel [0..2*PI] 
+	float r = length(coord); // radius of current pixel
+	float a = atan(coord.y, coord.x) + PI; //angel of current pixel [0..2*PI] 
 	
 	return r - 1 + 0.5 * sin(3 * a + 2 * r * r);
 }
 
 vec2 grad(const vec2 coord, const float pixelDelta)
 {
-    vec2 h = vec2( pixelDelta, 0.0 );
-    return vec2( distField(coord + h.xy) - distField(coord - h.xy),
-                 distField(coord + h.yx) - distField(coord - h.yx) )/(2.0 * h.x);
+	vec2 h = vec2( pixelDelta, 0.0 );
+	return vec2( distField(coord + h.xy) - distField(coord - h.xy),
+				distField(coord + h.yx) - distField(coord - h.yx) )/(2.0 * h.x);
 }
 
 vec2 gradGPU(const vec2 coord, const float pixelDelta)
 {
 	float f = distField(coord);
-    return vec2( dFdx(f), dFdy(f) ) / pixelDelta;
+	return vec2( dFdx(f), dFdy(f) ) / pixelDelta;
 }
 
 void main()
@@ -46,7 +46,7 @@ void main()
 	float threshold = abs(sin(iGlobalTime));
 
 	// range [-1..1]²
-    uv = vec2(1) - 2 * uv;
+	uv = vec2(1) - 2 * uv;
 	//aspect correction
 	uv.x *= iResolution.x / iResolution.y;
 	uv *= 2; // range [-2..2]²
@@ -73,3 +73,4 @@ void main()
 	
 	gl_FragColor = vec4(color, 1.0);
 }
+
