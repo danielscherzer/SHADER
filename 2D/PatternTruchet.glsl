@@ -46,7 +46,7 @@ vec2 repeatAndRotate(vec2 coord, float scale, float timeScale)
 	// angle = 0;
 	coord = fract(coord);
 	coord -= 0.5;
-	coord = rotate2D(coord, angle + TWOPI * timeScale * iGlobalTime);
+//	coord = rotate2D(coord, angle + TWOPI * timeScale * iGlobalTime); // step 2 rotate
 	coord += 0.5;
 	
 	return coord;
@@ -61,13 +61,13 @@ void main()
 	
 	coord.x *= iResolution.x / iResolution.y; //aspect
 	
-//	coord = repeatAndRotate(coord, 3, 0.21);
-//	coord = repeatAndRotate(coord, 4, 0.1); //recursive pattern
-//	coord = repeatAndRotate(coord, 4, 0.1); //recursive pattern
+//	coord = repeatAndRotate(coord, 3, 0.21); // step 1 repeat
+//	coord = repeatAndRotate(coord, 4, 0.1); // step 3 recursive pattern
+//	coord = repeatAndRotate(coord, 4, 0.1); // step 4 recursive pattern
 
 	float grid = triangle(coord, 0.01);
-//	grid = diagonal(coord, 0.05);
-//	grid = circles(coord);
+//	grid = diagonal(coord, 0.05); // step 5 
+//	grid = circles(coord); // step 6 
 
 	const vec3 white = vec3(1);
 	vec3 color = (1 - grid) * white;

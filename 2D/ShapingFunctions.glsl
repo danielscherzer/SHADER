@@ -1,4 +1,4 @@
-﻿#version 330
+#version 330
 // motivation : https://www.shadertoy.com/view/XsXXDn
 // idea from https://thebookofshaders.com/05/ nice explanation + links to function tools
 // look at http://www.cdglabs.org/Shadershop/ for visual function composing
@@ -61,42 +61,43 @@ float onAxis(vec2 coord, vec2 screenDelta)
 float function(float x)
 {
 	float y = x;
-	 y = abs(x);   // return the absolute value of x
-	 y = min(0.0,x);   // return the lesser of x and 0.0
-	 y = max(0.0,x);   // return the greater of x and 0.0 
-	 y = step(2, x) ;
-//	 y = smoothstep(-1, -0.9, x);
-//	 y = fract(x); // return only the fraction part of a number
-//	 y = mod(x, 2);
-//	y = clamp(x,0.0,1.0); // constrain x to lie between 0.0 and 1.0
-//	 y = ceil(x);  // nearest integer that is greater than or equal to x
-//	 y = floor(x); // nearest integer less than or equal to x
-	  y = sin(2*x)* 2;
-	// y = sign(x);  // extract the sign of x
-	// y = trunc(x);
-	// y = abs(sin(x));
-	// y = fract(sin(x) * 1.0);
-	// y = ceil(sin(x)) + floor(sin(x));
-	// y = sign(sin(x)) * pow(sin(x), 9.0);
-	// y = exp(-0.4 * abs(x)) * 1 * cos(2 * x);
-	// y = mod(x + 1, 2.0) - 1;
-	// y = abs(mod(x + 1, 2.0) - 1); // repeated tent
-	// y = step(2, mod(x, 4.0)); // repeat step
-	// y = smoothstep(-0.5, 1, cos(x)) * 2;
-	 float fact = 1; 
-	// y = floor(x / fact);
-	// y = floor(0.5 + x / fact) * fact;
-	// y = x - floor(0.5 + x / fact) * fact;
-	// y = cos(x - floor(0.5 + x / fact) * fact);
-	// y = distToInt(x);
-	// y = step(7, x) - step(8, x);
-	// y = step(1, mod(x, 2));
-	// y = rand(x);
-	// y = rand(ceil(x + 0.5)) * 10;
-	// y = opRepeat(vec3(x), vec3(2)).x;
-	// y = gnoise(x);
-	// y = sin(x) + 0.1 * sin(16*x + iMouse.x * 0.1);
-	// y = noise(x) + 0.1 * noise(16*x + iMouse.x * 0.1);
+//	y = abs(x); // step 1 returns the absolute value of x
+//	y = min(0.0, x); // step 2 return the lesser of x and 0.0
+//	y = max(0.0, x); // step 3 return the greater of x and 0.0
+//	y = step(2, x); // step 4 
+//	y = smoothstep(-1, 1, x); // step 5 
+//	y = fract(x); // step 6 return only the fraction part of a number
+//	y = mod(x, 2); // step 7 
+//	y = clamp(x, 0.0, 1.0); // step 8 constrain x to lie between 0.0 and 1.0
+//	y = ceil(x); // step 9 nearest integer that is greater than or equal to x
+//	y = floor(x); // step 10 nearest integer less than or equal to x
+//	y = sign(x); // step 11 extract the sign of x
+	vec2 mouse = iMouse.xy / iResolution;
+//	y = 5 * mouse.y * sin(x * mouse.x * 5); // step 12 
+//	y = trunc(x); // step 13 
+//	y = abs(sin(x)); // step 14 
+//	y = fract(sin(x) * 1.0); // step 15 
+//	y = ceil(sin(x)) + floor(sin(x)); // step 16 
+//	y = sign(sin(x)) * pow(sin(x), 9.0); // step 17 
+//	y = exp(-0.4 * abs(x)) * 1 * cos(2 * x); // step 18 
+//	y = mod(x + 1, 2.0) - 1; // step 19 
+//	y = abs(mod(x + 1, 2.0) - 1); // step 20 repeated tent
+//	y = step(2, mod(x, 4.0)); // step 21 repeat step
+//	y = smoothstep(-0.5, 1, cos(x)) * 2; // step 22 
+	float fact = 1;
+//	y = floor(x / fact); // step 23 
+//	y = floor(0.5 + x / fact) * fact; // step 24 
+//	y = x - floor(0.5 + x / fact) * fact; // step 25 
+//	y = cos(x - floor(0.5 + x / fact) * fact); // step 26 
+//	y = distToInt(x); // step 27 
+//	y = step(1, x) - step(2, x); // step 28 
+//	y = step(1, mod(x, 2)); // step 29 
+//	y = rand(x); // step 30 
+//	y = rand(ceil(x + 0.5)) * 5; // step 31 
+//	y = opRepeat(vec3(x), vec3(2)).x; // step 32 
+//	y = gnoise(x); // step 33 
+//	y = sin(x) + 0.1 * sin(16*x + mouse.x * 100); // step 34 
+//	y = noise(x) + 0.1 * noise(16*x + mouse.x * 100); // step 35 
 	return y;
 }
 
@@ -132,7 +133,7 @@ void main() {
 	//screen aspect
 	float aspect = 1;//iResolution.x / iResolution.y;
 	//coordinate system corners
-	float delta = 3;
+	float delta = 8;
 	vec2 lowerLeft = vec2(-delta * aspect, -delta);
 	vec2 upperRight = vec2(delta * aspect, delta);
 	//setup coordinate system

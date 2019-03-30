@@ -29,16 +29,16 @@
 	1. How can we control the thickness of general functions?
 	1. Create your own function using sin, smoothstep, mod, ...
 	1. Look at [Creation by Silexars@shadertoy](https://www.shadertoy.com/view/XsXXDn)
-1. [PatternCircle.glsl](PatternCircle.glsl)
-	1. Do not look at the code
-	1. Start the animation
-	1. Code this animation yourself
 1. [PatternTruchet.glsl](PatternTruchet.glsl)
 	1. Look at code together
 	1. Other tiling systems 
 		1. (Girih tiles)[https://en.wikipedia.org/wiki/Girih_tiles]
 		1. (Penrose tiling)[https://en.wikipedia.org/wiki/Penrose_tiling]
 		1. (Aperiodic tiling)[https://en.wikipedia.org/wiki/Aperiodic_tiling]
+1. [PatternCircle.glsl](PatternCircle.glsl)
+	1. Do not look at the code
+	1. Start the animation
+	1. Code this animation yourself
 1. [CircleDistanceField.glsl](CircleDistanceField.glsl)
 	1. We look at code together
 	1. Uncomment from top to bottom

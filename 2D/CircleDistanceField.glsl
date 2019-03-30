@@ -22,31 +22,29 @@ void main()
 	float x = sin(iGlobalTime);
 	float y = cos(iGlobalTime);
 	
-	// uv = mod(uv, vec2(2));
 	//two circle distance fields
 	float distCircle1 = distance(uv, vec2(x, y));
-	// distCircle1 = fract(distCircle1 * 5);
+//	distCircle1 = fract(distCircle1 * 5); // step 6 
 	float distCircle2 = distance(uv, vec2(y, x));
-	// distCircle2 = fract(distCircle2 * 5);
+//	distCircle2 = fract(distCircle2 * 5); // step 7 
 
 	color.rgb = vec3(distCircle1); // draw one circular distance field
 
-	float distUnion = min(distCircle1, distCircle2); //todo
-	// color.rgb = vec3(distUnion); // draw union
+	float distUnion = min(distCircle1, distCircle2);
+//	color.rgb = vec3(distUnion); // step 1 union
 
-	// float blurryness = 0.031; //control sharpness of circles
-	// color.rgb = vec3(smoothstep(0.4, 0.4 + blurryness, distUnion)); 
+	float blurryness = 0.031; // control sharpness of circles
+//	color.rgb = vec3(smoothstep(0.4, 0.4 + blurryness, distUnion)); // step 2 circles
 	
+	float distPower = pow(distCircle1, distCircle2);
+	float moveRed = abs(sin(iGlobalTime));
+//	color.r = smoothstep(moveRed, blurryness + moveRed, distPower); // step 3 red channel with pow
 	
-	// float distPower = pow(distCircle1, distCircle2);
-	// float moveRed = abs(sin(iGlobalTime));
-	// color.r = smoothstep(moveRed, blurryness + moveRed, distPower);
+	float moveGreen = abs(sin(iGlobalTime + 0.1));
+//	color.g = smoothstep(moveGreen, blurryness + moveGreen, distUnion); // step 4 green channel with union
 	
-	// float moveGreen = abs(sin(iGlobalTime + 0.1));
-	// color.g = smoothstep(moveGreen, blurryness + moveGreen, distUnion);
-	
-	// float moveBlue = abs(1 - sin(iGlobalTime + 0.2));
-	// color.b = smoothstep(moveBlue, blurryness + moveBlue, 0.5 * distPower);
+	float moveBlue = abs(1 - sin(iGlobalTime + 0.2));
+//	color.b = smoothstep(moveBlue, blurryness + moveBlue, 0.5 * distPower); // step 5 
 	
 	gl_FragColor = color;
 }
