@@ -13,7 +13,7 @@ void main()
 	//coordinate system scale
 	uv -= 0.5;
 	uv *= 8.0;
-	
+
 	//account for window aspect
 	float aspect = iResolution.x / iResolution.y;
 	uv.x *= aspect;
