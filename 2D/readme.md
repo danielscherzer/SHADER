@@ -46,7 +46,10 @@
 1. [Polar.glsl](Polar.glsl)
 	1. We look at code together
 	1. Uncomment from top to bottom
+	1. Try to do this https://www.shadertoy.com/view/4sSGDR
 	1. Make your own flowers, snowflakes, gears
 1. Combine [Pattern.glsl](Pattern.glsl) with [Polar.glsl](Polar.glsl)
-	1. Code a hexagrid
+	1. Snowflakes grid with multiple layers (https://www.shadertoy.com/view/XlSBz1) (https://www.shadertoy.com/view/XdsSDn)
+	1. Code a hexagrid (https://www.shadertoy.com/view/Xljczw)
+		+ (https://www.shadertoy.com/view/llSyDh)
 	1. Code your own pattern
