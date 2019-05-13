@@ -43,6 +43,7 @@ vec2 repeatAndRotate(vec2 coord, float scale, float timeScale)
 {
 	coord *= scale; //zoom
 	float angle = angle(coord);
+
 	// angle = 0;
 	coord = fract(coord);
 	coord -= 0.5;

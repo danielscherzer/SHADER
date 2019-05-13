@@ -61,8 +61,7 @@ void main()
 	// subSet = step(threshold, f);
 	// subSet = smoothstep(threshold + 0.0, threshold + 0.025, abs(f));
 	// subSet = de;
-	// subSet = clamp(de, 0.0, 0.025) * 20;
-	// subSet = smoothstep(0.0, 0.025, de);
+	subSet = smoothstep(0.0, 0.025, de);
 
 	float thickness = 0.05;
 	float d = distToInt(de * 5);

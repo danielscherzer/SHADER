@@ -73,13 +73,13 @@ float function(float x)
 //	y = floor(x); // step 10 nearest integer less than or equal to x
 //	y = sign(x); // step 11 extract the sign of x
 	vec2 mouse = iMouse.xy / iResolution;
-//	y = 5 * mouse.y * sin(x * mouse.x * 5); // step 12 
+	y = 5 * mouse.y * sin(x * mouse.x * 5); // step 12 
 //	y = trunc(x); // step 13 
-//	y = abs(sin(x)); // step 14 
-//	y = fract(sin(x) * 1.0); // step 15 
+	// y = abs(sin(x)); // step 14 
+	// y = fract(sin(x) * 1234567.0); // step 15 
 //	y = ceil(sin(x)) + floor(sin(x)); // step 16 
-//	y = sign(sin(x)) * pow(sin(x), 9.0); // step 17 
-//	y = exp(-0.4 * abs(x)) * 1 * cos(2 * x); // step 18 
+	// y = sign(sin(x)) * pow(sin(x), 9.0); // step 17 
+	// y = exp(-0.4 * abs(x)) * 1 * cos(2 * x); // step 18 
 //	y = mod(x + 1, 2.0) - 1; // step 19 
 //	y = abs(mod(x + 1, 2.0) - 1); // step 20 repeated tent
 //	y = step(2, mod(x, 4.0)); // step 21 repeat step
@@ -89,23 +89,31 @@ float function(float x)
 //	y = floor(0.5 + x / fact) * fact; // step 24 
 //	y = x - floor(0.5 + x / fact) * fact; // step 25 
 //	y = cos(x - floor(0.5 + x / fact) * fact); // step 26 
-//	y = distToInt(x); // step 27 
-//	y = step(1, x) - step(2, x); // step 28 
+	// y = distToInt(x); // step 27 
+	// y = step(1, x) - step(2, x); // step 28 
 //	y = step(1, mod(x, 2)); // step 29 
-//	y = rand(x); // step 30 
-//	y = rand(ceil(x + 0.5)) * 5; // step 31 
-//	y = opRepeat(vec3(x), vec3(2)).x; // step 32 
-//	y = gnoise(x); // step 33 
-//	y = sin(x) + 0.1 * sin(16*x + mouse.x * 100); // step 34 
-//	y = noise(x) + 0.1 * noise(16*x + mouse.x * 100); // step 35 
+	// y = opRepeat(vec3(x), vec3(2)).x; // step 30 
+//	y = sin(x) + 0.1 * sin(16*x + mouse.x * 100); // step 31 
+	// y = rand(x); // step 32
+	// y = rand(ceil(x + 0.5)) * 5; // step 33
+	// y = noise(x - mouse.x * 30); // step 34
+	// y = gnoise(x - mouse.x * 30); // step 34
+	// y = noise(x + mouse.x * 100) + 0.1 * noise(16*x); // step 35 
 	return y;
 }
 
 //draw function line
 float plotFunction(vec2 coord, vec2 screenDelta)
 {
-	float dist = abs(function(coord.x) - coord.y);
-	return 1 - smoothstep(0, screenDelta.y, dist);
+	float f = function(coord.x) - coord.y;
+	float dist = abs(f);
+	
+	vec2 gradient = vec2(dFdx(f), dFdy(f));
+	float filterWidth = length(gradient) * 2.0;
+	return 1 - smoothstep(0, filterWidth, dist);
+
+	// return 1 - step(0.1, dist);
+	// return 1 - smoothstep(0, screenDelta.y, dist);
 }
 
 float distPointLine(vec2 point, vec2 a, vec2 b)
@@ -149,7 +157,7 @@ void main() {
 	color *= gridColor;
 	
 	//function
-//	float graph = plotDifferentiableFunction(coord, 4 * screenDelta);
+	// float graph = plotDifferentiableFunction(coord, 4 * screenDelta);
 	float graph = plotFunction(coord, 4 * screenDelta);
 
 	// combine
