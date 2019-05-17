@@ -10,7 +10,7 @@ in vec2 uv;
 const float bigNumber = 10000.0;
 const float eps = 1e-5;
 vec3 toLight = normalize(vec3(sin(iGlobalTime + 2.0), 0.6, cos(iGlobalTime + 2.0)));
-const vec3 lightColor = vec3(1, 1, 0.9);
+const vec3 lightColor = vec3(1, 1, 1);
 const vec3 lightColorAmbient = vec3(0.15, 0.15, 0);
 
 const int PLANE = 0;
@@ -48,11 +48,11 @@ Scene buildScene()
 		for(float x = delta.x; x <= delta.x + 1.0; x += 1.0)
 		{	
 			vec3 newM = vec3(x, y, z);
-			scene.objects[i] = Object(vec4(newM, 0.3), 0 == i % 2 ? SPHERE : BOX, 128f);
+			scene.objects[i] = Object(vec4(newM, 0.3), 0 == i % 2 ? SPHERE : BOX, 128);
 			++i;
 		}
 	}
-	scene.objects[i] = Object(vec4(vec3(0.0, 1.0, 0.0), .5), PLANE, 0f);
+	scene.objects[i] = Object(vec4(vec3(0.0, 1.0, 0.0), .5), PLANE, 0);
 	++i;
 	return scene;
 };
@@ -100,7 +100,11 @@ vec3 objectColor(const Object obj, const TraceState state)
 	{
 		case 0: //plane
 			vec2 p = floor(state.point.xz * 8.0);
-			return mix(vec3(0.5), vec3(1), mod(p.x + p.y, 2.0));
+			float checker = mod(p.x + p.y, 2.0);
+			vec2 width = fwidth(state.point.xz * 16.0);
+			float widthMax = max(width.s, width.t);
+			float weight = smoothstep(0.5, 0.5 + widthMax, checker);
+			return mix(vec3(0.5), vec3(1), weight);
 		case 1: //sphere
 			return abs(normalize(obj.data.xyz - vec3(1.0, 0.0, 2.0)));
 		case 2: //cube

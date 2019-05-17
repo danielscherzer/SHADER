@@ -103,7 +103,11 @@ vec3 objectColor(const Object obj, const TraceState state)
 	{
 		case 0: //plane
 			vec2 p = floor(state.point.xz * 8.0);
-			return mix(vec3(0.5), vec3(1), mod(p.x + p.y, 2.0));
+			float checker = mod(p.x + p.y, 2.0);
+			vec2 width = fwidth(state.point.xz * 16.0);
+			float widthMax = max(width.s, width.t);
+			float weight = smoothstep(0.5, 0.5 + widthMax, checker);
+			return mix(vec3(0.5), vec3(1), weight);
 		case 1: //sphere
 			return abs(normalize(obj.data.xyz - vec3(1.0, 0.0, 2.0)));
 		case 2: //cube
