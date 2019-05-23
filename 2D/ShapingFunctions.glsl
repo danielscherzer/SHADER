@@ -9,7 +9,7 @@
 uniform vec3 iMouse;
 uniform vec2 iResolution;
 uniform float iGlobalTime;
-varying vec2 uv;
+in vec2 uv;
 
 const float PI = 3.14159265359;
 const float TWOPI = 2 * PI;
@@ -135,6 +135,7 @@ float plotDifferentiableFunction(vec2 coord, vec2 screenDelta)
 	return 1 - smoothstep(0, screenDelta.y, dist);
 }
 
+out vec4 fragColor;
 void main() {
 	//map coordinates in range [0,1]
 	vec2 coord01 = gl_FragCoord.xy/iResolution;
@@ -164,5 +165,5 @@ void main() {
 	const vec3 green = vec3(0.0, 1.0, 0.0);
 	color = mix(color, green, graph);
 
-	gl_FragColor = vec4(color, 1.0);
+	fragColor = vec4(color, 1.0);
 }

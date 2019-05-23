@@ -7,7 +7,7 @@ float outsideCircle(vec2 coord, vec2 center, float radius)
 {
 	float f = distance(coord, center);
 	vec2 gradient = vec2(dFdx(f), dFdy(f));
-	float filterWidthHalf = length(gradient);
+	float filterWidthHalf = length(gradient); //maximal frequence
 	return smoothstep(radius - filterWidthHalf, radius + filterWidthHalf, f);
 }
 
@@ -35,8 +35,6 @@ void main() {
 	// line x == y symmetry
 	coord = octantSymmetry(coord);
 
-
-	float filterWidthHalf = 0.01;
 	float noCircle = outsideCircle(coord, vec2(1.0, 0.0), 0.64);
 	float noSmallCircle = outsideCircle(coord, vec2(0.5, 0.5), 0.12);
 

@@ -31,10 +31,10 @@
 	1. Look at [Creation by Silexars@shadertoy](https://www.shadertoy.com/view/XsXXDn)
 1. [PatternTruchet.glsl](PatternTruchet.glsl)
 	1. Look at code together
-	1. Other tiling systems 
-		1. (Girih tiles)[https://en.wikipedia.org/wiki/Girih_tiles]
-		1. (Penrose tiling)[https://en.wikipedia.org/wiki/Penrose_tiling]
-		1. (Aperiodic tiling)[https://en.wikipedia.org/wiki/Aperiodic_tiling]
+	1. Other tiling systems
+		1. [Girih tiles](https://en.wikipedia.org/wiki/Girih_tiles)
+		1. [Penrose tiling](https://en.wikipedia.org/wiki/Penrose_tiling)
+		1. [Aperiodic tiling](https://en.wikipedia.org/wiki/Aperiodic_tiling)
 1. [PatternCircle.glsl](PatternCircle.glsl)
 	1. Do not look at the code
 	1. Start the animation
@@ -46,10 +46,10 @@
 1. [Polar.glsl](Polar.glsl)
 	1. We look at code together
 	1. Uncomment from top to bottom
-	1. Try to do this https://www.shadertoy.com/view/4sSGDR
+	1. Try to do this <https://www.shadertoy.com/view/4sSGDR>
 	1. Make your own flowers, snowflakes, gears
 1. Combine [Pattern.glsl](Pattern.glsl) with [Polar.glsl](Polar.glsl)
-	1. Snowflakes grid with multiple layers (https://www.shadertoy.com/view/XlSBz1) (https://www.shadertoy.com/view/XdsSDn)
-	1. Code a hexagrid (https://www.shadertoy.com/view/Xljczw)
-		+ (https://www.shadertoy.com/view/llSyDh)
+	1. Snowflakes grid with multiple layers (<https://www.shadertoy.com/view/XlSBz1>) (<https://www.shadertoy.com/view/XdsSDn>)
+	1. Code a hexagrid (<https://www.shadertoy.com/view/Xljczw)>
+		+ (<https://www.shadertoy.com/view/llSyDh)>
 	1. Code your own pattern
