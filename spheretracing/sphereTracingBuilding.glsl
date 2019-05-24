@@ -27,7 +27,7 @@ float distField(vec3 point)
 
 float ambientOcclusion(vec3 point, float delta, int samples)
 {
-	vec3 normal = getNormal(point, 0.0001);
+	vec3 normal = getNormal(point, epsilon);
 	float occ = 0;
 	for(int i = 1; i < samples + 1; ++i)
 	{
@@ -36,41 +36,38 @@ float ambientOcclusion(vec3 point, float delta, int samples)
 	return 1 - occ;
 }
 
-
+out vec3 color;
 void main()
 {
 	vec3 camP = calcCameraPos();
 	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
 
 	//start point is the camera position
-	vec3 point = camP; 	
+	vec3 point = camP;
 	bool objectHit = false;
 	float t = 0.0;
-	//step along the ray 
+	//step along the ray
 	int steps = 0;
-    for(; (steps < maxSteps)&& (t < 300); ++steps) //t < const can be very large and still it is much faster then without
-    {
+	for(; (steps < maxSteps) && (t < 100); ++steps) //t < constant can be very large and still it is much faster then without
+	{
 		//check how far the point is from the nearest surface
-        float dist = distField(point);
+		float dist = distField(point);
 		//if we are very close
-        if(epsilon > dist)
-        {
+		if(epsilon > dist)
+		{
 			objectHit = true;
-            break;
-        }
+			break;
+		}
 		//not so close -> we can step at least dist without hitting anything
 		t += dist;
 
 		//calculate new point
-        point = camP + t * camDir;
-    }
+		point = camP + t * camDir;
+	}
 
-	float effort = steps;
-	effort /= maxSteps;
+	float effort = steps / maxSteps;
 	vec3 red = vec3(1, 0, 0);
 	vec3 green = vec3(0, 1, 0);
-	vec3 color = mix(green, red, effort);
-	// color = objectHit ? ambientOcclusion(point, 0.02, 5) * vec3(1) : vec3(0);
-
-	gl_FragColor = vec4(color, 1);
+	color = mix(green, red, effort);
+	color = objectHit ? ambientOcclusion(point, 0.02, 5) * vec3(1) : vec3(0);
 }

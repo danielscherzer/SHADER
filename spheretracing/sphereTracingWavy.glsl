@@ -9,16 +9,16 @@ const float epsilon = 0.0001;
 const int maxSteps = 128;
 
 float sPlane(vec3 point, vec3 normal, float d) {
-    return dot(point, normal) - d;
+	return dot(point, normal) - d;
 }
 
 float sSphere(vec3 point, vec3 center, float radius) {
-    return length(point - center) - radius;
+	return length(point - center) - radius;
 }
 
 vec3 opCoordinateRepetition(vec3 point, vec3 c)
 {
-    return mod(point, c) - 0.5 * c;
+	return mod(point, c) - 0.5 * c;
 }
 
 
@@ -54,20 +54,20 @@ void main()
 	vec3 camP = calcCameraPos();
 	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
 	
-	vec3 point = camP; 	
+	vec3 point = camP;
 	bool objectHit = false;
 	float t = 0.0;
-    for(int steps = 0; steps < maxSteps; ++steps)
-    {
-        float dist = distScene(point);
-        if(epsilon > dist)
-        {
+	for(int steps = 0; steps < maxSteps; ++steps)
+	{
+		float dist = distScene(point);
+		if(epsilon > dist)
+		{
 			objectHit = true;
-            break;
-        }
-        t += dist;
-        point = camP + t * camDir;
-    }
+			break;
+		}
+		t += dist;
+		point = camP + t * camDir;
+	}
 	vec3 color = vec3(0.0, 0.0, 0.0);
 	if(objectHit)
 	{

@@ -55,8 +55,8 @@ float box(const vec3 minP, const vec3 maxP, const Ray ray, const float EPSILON)
 	vec3 f = max(t0, t1);
 	float enter = max(n.x, max(n.y, n.z));
 	float exit = min(f.x, min(f.y, f.z));
-	if(enter > exit) return -1;
-	if (0 < enter) return enter;
+	if(enter > exit) return -1.0;
+	if (0.0 < enter) return enter;
 	return exit;
 }
 

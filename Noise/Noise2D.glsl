@@ -43,8 +43,8 @@ float noise(vec2 coord)
 	
 	vec2 f = fract(coord);
 	vec2 weight = f; // linear interpolation
-	weight = smoothstep(0, 1, f); // cubic interpolation
-	weight = quinticInterpolation(f);
+//	weight = smoothstep(0, 1, f); // cubic interpolation
+//	weight = quinticInterpolation(f);
 
 	float x1 = mix(v00, v10, weight.x);
 	float x2 = mix(v01, v11, weight.x);
@@ -69,9 +69,9 @@ float gnoise(vec2 coord)
 	float v11 = dot(g11, f - vec2(1, 1));
 
 	vec2 weight = f; // linear interpolation
-	weight = smoothstep(0, 1, f); // cubic interpolation
-	// weight = smoothstep(0, 1, weight); // x^6 interpolation
-	// weight = quinticInterpolation(f);
+//	weight = smoothstep(0, 1, f); // cubic interpolation
+//	weight = smoothstep(0, 1, weight); // x^6 interpolation
+//	weight = quinticInterpolation(f);
 
 	float x1 = mix(v00, v10, weight.x);
 	float x2 = mix(v01, v11, weight.x);
@@ -82,20 +82,14 @@ uniform vec2 iResolution;
 uniform float iGlobalTime;
 uniform vec3 iMouse;
 
-const float PI = 3.1415926535897932384626433832795;
-const float TWOPI = 2 * PI;
-const float EPSILON = 10e-4;
-
-
+out vec3 color;
 void main() {
 	//coordinates in range [0,1]
-    vec2 coord = gl_FragCoord.xy/iResolution;
+	vec2 coord = gl_FragCoord.xy/iResolution;
 	
 	float value = rand(coord);
-	// value = noise(coord * 10);
-	// value = gnoise(coord * 10);
+//	value = noise(coord * 10);
+//	value = gnoise(coord * 10);
 	
-	vec3 color = vec3(1) * value;
-		
-    gl_FragColor = vec4(color, 1.0);
+	color = vec3(1) * value;
 }

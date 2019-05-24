@@ -38,45 +38,43 @@ float sdBox( vec3 p, vec3 b )
 	return min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));
 }
 
-vec2 map( in vec3 pos )
+float map( in vec3 pos )
 {
 	float box = sdBox( opRep( opTwist(pos-vec3(0.0, 0.0, 0.0)) ), vec3(0.29, 0.09, 0.29) );
 	float innerbox = sdBox( opRep( opTwist(pos-vec3( 0.0, 0.0, 0.0)) ), vec3(0.17, 0.2, 0.17) );
 	
 	float logo = opS( innerbox, box );
 	
-	vec2 res = vec2( logo, 0.0 );
-	return res;
+	return logo;
 }
 
 vec3 calcNormal( in vec3 pos )
 {
-  	vec3 eps = vec3( 0.001, 0.0, 0.0 );
-  	vec3 nor = vec3(
-      	  map(pos+eps.xyy).x - map(pos-eps.xyy).x,
-      	  map(pos+eps.yxy).x - map(pos-eps.yxy).x,
-      	  map(pos+eps.yyx).x - map(pos-eps.yyx).x );
+	vec3 eps = vec3( 0.001, 0.0, 0.0 );
+	vec3 nor = vec3(
+		map(pos+eps.xyy) - map(pos-eps.xyy),
+		map(pos+eps.yxy) - map(pos-eps.yxy),
+		map(pos+eps.yyx) - map(pos-eps.yyx));
 	return normalize(nor);
 }
 
 
 vec2 castRay( in vec3 ro, in vec3 rd, in float maxd )
 {
-    float precis = 0.001;
-    float h=precis*2.0;
-    float t = 0.0;
-    float m = -1.0;
-    for( int i=0; i<60; i++ )
-    {
-        if( abs(h)<precis||t>maxd ) continue;//break;
-        t += h;
-        vec2 res = map( ro+rd*t );
-        h = res.x;
-        m = res.y;
-    }
+	float precis = 0.001;
+	float h=precis*2.0;
+	float t = 0.0;
+	float m = -1.0;
+	for( int i=0; i<60; i++ )
+	{
+		if( abs(h)<precis||t>maxd ) continue;//break;
+		t += h;
+		h = map( ro+rd*t );
+		m = 0.0;
+	}
 
-    if( t>maxd ) m=-1.0;
-    return vec2( t, m );
+	if( t>maxd ) m=-1.0;
+	return vec2( t, m );
 }
 
 

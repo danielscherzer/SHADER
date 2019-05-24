@@ -9,7 +9,7 @@ float iTime = iGlobalTime;
 
 const float epsilon = 1e-4;
 const int maxSteps = 256;
-const int ITERATIONS = 5;
+const int ITERATIONS = 6;
 
 //adapted from  http://www.iquilezles.org/www/articles/menger/menger.htm
 
@@ -36,25 +36,24 @@ float map( in vec3 p )
     float s = 1.0;
     for( int m = 0; m < ITERATIONS; ++m)
     {
-        //p = mix( p, ma*(p+off), ani );
-	   
-        vec3 a = mod( p*s, 2.0 )-1.0;
-        s *= 3.0;
-        vec3 r = abs(1.0 - 3.0 * abs(a));
-        float da = max(r.x,r.y);
-        float db = max(r.y,r.z);
-        float dc = max(r.z,r.x);
-        float c = ( min(da,min(db,dc) ) - 1.0) / s;
+//		p = mix( p, ma*(p+off), ani );
+		vec3 a = mod( p*s, 2.0 )-1.0;
+		s *= 3.0;
+		vec3 r = abs(1.0 - 3.0 * abs(a));
+		float da = max(r.x,r.y);
+		float db = max(r.y,r.z);
+		float dc = max(r.z,r.x);
+		float c = ( min(da,min(db,dc) ) - 1.0) / s;
 
 		
-        if( c > d )
-        {
-          d = c;
-          // res = vec4( d, min(res.y,0.2*da*db*dc), (1.0+float(m))/4.0, 0.0 );
-        }
-    }
-return d;
-    // return res;
+		if( c > d )
+		{
+			d = c;
+			res = vec4( d, min(res.y,0.2*da*db*dc), (1.0+float(m))/4.0, 0.0 );
+		}
+	}
+	return d;
+//	return res;
 }
 
 float distField(vec3 point)
@@ -70,7 +69,7 @@ float ambientOcclusion(vec3 point, float delta, int samples)
 	{
 		occ += (8.0/i) * (i * delta - distField(point + i * delta * normal));
 	}
-	// occ = clamp(occ, 0, 1);
+//	occ = clamp(occ, 0, 1);
 	return 1.0 - occ;
 }
 
@@ -90,9 +89,9 @@ void main()
         float dist = distField(point);
 		//if we are very close
         if(epsilon > dist)
-        {
+		{
 			objectHit = true;
-            break;
+			break;
         }
 		//not so close -> we can step at least dist without hitting anything
         t += dist;
@@ -116,7 +115,7 @@ void main()
 		// color = material;
 	}
 	//fog
-	float tmax = 10.0;
+	float tmax = 4.0;
 	float factor = t/tmax;
 	factor = clamp(factor * factor, 0.0, 1.0);
 	color = mix(color, vec3(0.6, 0.8, 0.1), factor);

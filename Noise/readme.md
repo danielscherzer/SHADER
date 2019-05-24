@@ -15,8 +15,9 @@
 	1. Look at code together
 	1. When do rand() and noise() look the same?
 	1. Try out different interpolations
-	1. Look at quad manipulation code
-1. [NoiseExamples.glsl](NoiseExamples.glsl)
+1. (Wood.glsl)
+	1. Uncomment and analyze
+1. (Lava.glsl)
 	1. Uncomment and analyze
 1. [ShapingFunctions.glsl](ShapingFunctions.glsl)
 	1. Look at amplitude * sin(x * frequency + phase)

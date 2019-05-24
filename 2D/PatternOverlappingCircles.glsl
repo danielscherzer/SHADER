@@ -7,7 +7,7 @@ float outsideCircle(vec2 coord, vec2 center, float radius)
 {
 	float f = distance(coord, center);
 	vec2 gradient = vec2(dFdx(f), dFdy(f));
-	float filterWidthHalf = length(gradient); //maximal frequence
+	float filterWidthHalf = length(gradient);
 	return smoothstep(radius - filterWidthHalf, radius + filterWidthHalf, f);
 }
 

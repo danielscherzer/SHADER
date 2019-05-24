@@ -33,8 +33,9 @@ float distMonster(vec3 point)
 	float tentacle = distTentacle(point);
 	point.y -= 0.1;
 	float sphere = fSphere(point, 0.35);
-	// return sphere;
-	// return min(tentacle, sphere);
+//	 return sphere;
+//return tentacle;
+//	 return min(tentacle, sphere);
 	return smin(tentacle, sphere, 0.2 );
  }
 
@@ -48,12 +49,13 @@ float distColumns(vec3 point)
 
 float distField(vec3 point)
 {
-	float plane = fPlane(point, vec3(0, 1, 0), 0.1);
-	// return plane;
+	float plane = fPlane(point, vec3(0, 1, 0), +0.1);
+//	return plane;
 	float columns = distColumns(point);
-	// return min(columns, plane);
+//	return columns;
+//	return min(columns, plane);
 	float monster = distMonster(point);
-	// return monster;
+	 return monster;
 	float d1 = min(plane, columns);
 	return min(d1, monster);
 }
@@ -70,6 +72,7 @@ float ambientOcclusion(vec3 point, float delta, int samples)
 	return 1 - occ;
 }
 
+out vec3 color;
 void main()
 {
 	vec3 camP = calcCameraPos();
@@ -78,27 +81,27 @@ void main()
 	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
 
 	//start point is the camera position
-	vec3 point = camP; 	
+	vec3 point = camP;
 	bool objectHit = false;
 	float t = 0.0;
-	//step along the ray 
-    for(int steps = 0; steps < maxSteps; ++steps)
-    {
+	//step along the ray
+	for(int steps = 0; steps < maxSteps; ++steps)
+	{
 		//check how far the point is from the nearest surface
-        float dist = distField(point);
+		float dist = distField(point);
 		//if we are very close
-        if(epsilon > dist)
-        {
+		if(epsilon > dist)
+		{
 			objectHit = true;
-            break;
-        }
+			break;
+		}
 		//not so close -> we can step at least dist without hitting anything
-        t += dist;
+		t += dist;
 		//calculate new point
-        point = camP + t * camDir;
-    }
+		point = camP + t * camDir;
+	}
 
-	vec3 color = vec3(0, 0, 1);
+	color = vec3(0, 0, 1);
 	if(objectHit)
 	{
 		vec3 material = vec3(1); //white
@@ -117,5 +120,4 @@ void main()
 	float factor = t/tmax;
 	factor = clamp(factor, 0.0, 1.0);
 	color = mix(color, vec3(1.0, 0.8, 0.1), factor);
-	gl_FragColor = vec4(color, 1);
 }

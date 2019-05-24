@@ -13,8 +13,8 @@ const float EPSILON = 10e-4;
 
 vec2 rotate2D(vec2 coord, float angle)
 {
-    mat2 rot =  mat2(cos(angle),-sin(angle), sin(angle),cos(angle));
-    return rot * coord;
+	mat2 rot =  mat2(cos(angle),-sin(angle), sin(angle),cos(angle));
+	return rot * coord;
 }
 
 float lines(vec2 pos, float b){
@@ -24,16 +24,15 @@ float lines(vec2 pos, float b){
 
 vec3 wood(vec2 coord)
 {
-	// coord = rotate2D(coord, gnoise(coord)); // step 1 rotate the space
-    float weight = lines(coord * 10.0, 0.5); // draw lines
+	coord = rotate2D(coord, gnoise(coord)); // step 1 rotate the space
+	float weight = lines(coord * 10.0, 0.5); // draw lines
 	return 	mix(vec3(0.4, 0.2, 0), vec3(0.8, 0.8, 0), weight);
 }
 
+out vec3 color;
 void main() {
 	//coordinates in range [0,1]
-    vec2 coord = gl_FragCoord.xy/iResolution;
-		
-	vec3 color = wood(0.5 + coord.yx * vec2(10.,5.));
-		
-    gl_FragColor = vec4(color, 1.0);
+	vec2 coord = gl_FragCoord.xy/iResolution;
+
+	color = wood(0.5 + coord.yx * vec2(10.,5.));
 }

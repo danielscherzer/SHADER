@@ -8,7 +8,7 @@ const int maxSteps = 32;
 
 float dist2sphere(vec3 point, vec3 center, float radius) 
 {
-    return length(point - center) - radius;
+	return length(point - center) - radius;
 }
 
 float distFunc(vec3 point)
@@ -26,21 +26,21 @@ void main()
 	bool objectHit = false;
 	float t = 0.0;
 	//step along the ray 
-    for(int steps = 0; steps < maxSteps; ++steps)
-    {
+	for(int steps = 0; steps < maxSteps; ++steps)
+	{
 		//check how far the point is from the nearest surface
-        float dist = distFunc(point);
+		float dist = distFunc(point);
 		//if we are very close
-        if(epsilon > dist)
-        {
+		if(epsilon > dist)
+		{
 			objectHit = true;
-            break;
-        }
+			break;
+		}
 		//not so close -> we can step at least dist without hitting anything
-        t += dist;
+		t += dist;
 		//calculate new point
-        point = camP + t * camDir;
-    }
+		point = camP + t * camDir;
+	}
 
 	if(objectHit)
 	{

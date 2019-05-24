@@ -20,27 +20,27 @@ float fBm(float x)
 	// Loop of octaves
 	for (int i = 0; i < octaves; ++i)
 	{
-		value += amplitude * noise(frequency * x - iGlobalTime);
+		value += amplitude * noise(frequency * x);
 		frequency *= lacunarity;
 		amplitude *= gain;
 	}
 	return value;
 }
 
-//draw function line		
+//draw function line
 float plotFunction(vec2 coord, float width)
 {
 	float dist = abs(fBm(coord.x) - coord.y);
 	return 1 - smoothstep(0, width, dist);
 }
 
+out vec3 color;
 void main() {
 	//map coordinates in range [0,1]
-    vec2 coord = gl_FragCoord.xy/iResolution;
+	vec2 coord = gl_FragCoord.xy/iResolution;
 	//setup coordinate system
 	coord = (coord - 0.5) * vec2(10, 4);
 	//draw function
-    float graph = plotFunction(coord, 0.03);
-	vec3 color = vec3(1) * graph;
-    gl_FragColor = vec4(color, 1.0);
+	float graph = plotFunction(coord, 0.03);
+	color = vec3(1) * graph;
 }
