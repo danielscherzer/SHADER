@@ -9,6 +9,7 @@ float outsideCircle(vec2 coord, vec2 center, float radius)
 	vec2 gradient = vec2(dFdx(f), dFdy(f));
 	float filterWidthHalf = length(gradient);
 	return smoothstep(radius - filterWidthHalf, radius + filterWidthHalf, f);
+//	return step(radius, f);
 }
 
 vec2 octantSymmetry(vec2 coord)
