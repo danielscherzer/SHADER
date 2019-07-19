@@ -73,7 +73,7 @@ float function(float x)
 //	y = floor(x); // step 10 nearest integer less than or equal to x
 //	y = sign(x); // step 11 extract the sign of x
 	vec2 mouse = iMouse.xy / iResolution;
-	y = 5 * mouse.y * sin(x * mouse.x * 5); // step 12 
+//	y = 5 * mouse.y * sin(x * mouse.x * 5); // step 12 
 //	y = trunc(x); // step 13 
 	// y = abs(sin(x)); // step 14 
 	// y = fract(sin(x) * 1234567.0); // step 15 

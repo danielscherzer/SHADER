@@ -6,7 +6,7 @@
 uniform vec2 iResolution;
 
 const float epsilon = 1e-3;
-const int maxSteps = 512;
+const int maxSteps = 256;
 
 float distField(vec3 point)
 {
@@ -28,6 +28,7 @@ float distField(vec3 point)
 float ambientOcclusion(vec3 point, float delta, int samples)
 {
 	vec3 normal = getNormal(point, epsilon);
+//	return dot(normal, normalize(vec3(1,1,-1)));
 	float occ = 0;
 	for(int i = 1; i < samples + 1; ++i)
 	{
@@ -48,8 +49,9 @@ void main()
 	float t = 0.0;
 	//step along the ray
 	int steps = 0;
-	for(; (steps < maxSteps) && (t < 100); ++steps) //t < constant can be very large and still it is much faster then without
+	for(; (steps < maxSteps); ++steps)
 	{
+//		if(t > 100) break; // t > constant can be very large and still it is much faster then without
 		//check how far the point is from the nearest surface
 		float dist = distField(point);
 		//if we are very close
@@ -60,6 +62,7 @@ void main()
 		}
 		//not so close -> we can step at least dist without hitting anything
 		t += dist;
+//		t += max(dist, t * 0.001); // Screen error decreases with distance
 
 		//calculate new point
 		point = camP + t * camDir;

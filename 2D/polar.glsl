@@ -7,6 +7,7 @@ const float EPSILON = 10e-4;
 uniform vec2 iResolution;
 uniform float iGlobalTime;
 
+out vec3 fragColor;
 void main()
 {
 	vec2 uv = gl_FragCoord.xy/iResolution.xy;
@@ -40,5 +41,5 @@ void main()
 //	color = vec3(smoothstep(f, f + 0.01, r)); // step 5 
 //	color = vec3(smoothstep(0.4, 0.401, f));// step 9 
 	
-	gl_FragColor = vec4(color, 1.0);
+	fragColor = color;
 }

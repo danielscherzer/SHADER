@@ -27,24 +27,20 @@ float distTree(vec3 point)
 	return cylinder + bark;
 }
 
-float displacement(vec3 point)
-{
-	return snoise(point.xz * 0.1) * 4
-	+ snoise(point.xz * 0.3) * 0.5 	
-	;
-}
-
 float distTerrain(vec3 point)
 {
-	float y = displacement(point) * 0.3;
-	point.y += y; //bad distance field -> keep gradient low
+	float yDisplacement  = 0.0;
+	yDisplacement = snoise(point.xz * 0.1) * 4;
+	yDisplacement+= snoise(point.xz * 0.3) * 0.5;
+	yDisplacement+= snoise(point.xz) * 0.1;
+	point.y += yDisplacement * 0.4; // bad distance field -> keep gradient low
 	return sPlane(point, vec3(0.0, 1.0, 0.0), -0.5);
 }
 
 float distField(vec3 point)
 {
 	float terrain = distTerrain(point);
-	// return terrain;
+	return terrain;
 	float trees = distTree(point);
 	return smin(terrain, trees, 0.9);
 }
@@ -129,7 +125,7 @@ void main()
 	if(0 < t)
 	{
 		vec3 point = camP + t * camDir;
-		vec3 normal = getNormal(point, 0.01);
+		vec3 normal = getNormal(point, 0.001);
 		vec3 lightDir = normalize(vec3(1, -1, 1));
 		vec3 toLight = -lightDir;
 		float diffuse = max(0, dot(toLight, normal));
@@ -137,11 +133,11 @@ void main()
 		vec3 ambient = vec3(0);
 
 		color = ambient + diffuse * material;
-		// color = material;
+		//color = material;
 		float weight = t / maxT;
 		color = mix(color, vec3(0), pow(weight, 2)); //fog
 		// color = vsec3(1 - abs(acos(dot(normal, vec3(0,1,0)))));
 	}
-	color = rayMarchVolumetric(camP, camDir, t, color);
+	//color = rayMarchVolumetric(camP, camDir, t, color);
 	gl_FragColor = vec4(color, 1);
 }

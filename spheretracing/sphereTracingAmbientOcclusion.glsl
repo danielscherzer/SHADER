@@ -55,7 +55,7 @@ float distField(vec3 point)
 //	return columns;
 //	return min(columns, plane);
 	float monster = distMonster(point);
-	 return monster;
+//	return monster;
 	float d1 = min(plane, columns);
 	return min(d1, monster);
 }

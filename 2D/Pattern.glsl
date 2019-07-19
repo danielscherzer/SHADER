@@ -1,4 +1,4 @@
-#version 330
+#version 120
 
 uniform vec2 iResolution;
 uniform float iGlobalTime;
@@ -42,7 +42,6 @@ float grid(in vec2 coord)
 	return smoothBox(coord, vec2(0.9, 0.9), 0.01);
 }
 
-out vec4 color;
 void main() {
 	//coordinates in range [0,1]
 	vec2 coord = gl_FragCoord.xy / iResolution;
@@ -52,5 +51,5 @@ void main() {
 	float grid = grid(coord);
 	const vec3 white = vec3(1);
 
-	color = vec4(grid * white, 1.0);
+	gl_FragColor = vec4(grid * white, 1.0);
 }

@@ -1,7 +1,9 @@
+#version 120
+
 uniform vec3 iMouse;
 uniform vec2 iResolution;
 uniform float iGlobalTime;
-varying vec2 uv;
+in vec2 uv;
 		
 void main()
 {

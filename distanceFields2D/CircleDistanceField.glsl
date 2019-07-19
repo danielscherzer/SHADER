@@ -2,7 +2,8 @@
 
 uniform vec2 iResolution;
 uniform float iGlobalTime;
-	
+
+out vec4 fragColor;
 void main()
 {
 	//create uv to be in the range [0..1]²
@@ -46,5 +47,5 @@ void main()
 	float moveBlue = abs(1 - sin(iGlobalTime + 0.2));
 //	color.b = smoothstep(moveBlue, blurryness + moveBlue, 0.5 * distPower); // step 5 
 	
-	gl_FragColor = color;
+	fragColor = color;
 }

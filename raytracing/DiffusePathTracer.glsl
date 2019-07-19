@@ -17,8 +17,8 @@ const float TWOPI = 2 * PI;
 const float BIG_NUMBER = 1e20;
 
 #define eps 0.0001
-#define EYEPATHLENGTH 3
-#define SAMPLES 800
+#define EYEPATHLENGTH 4
+#define SAMPLES 200
 
 #define LIGHTCOLOR vec3(16.86, 10.76, 8.2) * 1.3
 #define WHITECOLOR vec3(.7295, .7355, .729) * 0.7
@@ -173,26 +173,27 @@ mat3 coordinateSystem(const vec3 v1)
 
 vec3 traceEyePath( in vec3 ro, in vec3 rd ) 
 {
-    vec3 color = vec3(1.0); //trace back attenuation of color start with white
-    
-    for(int i = 0; i < EYEPATHLENGTH; ++i) 
+	vec3 color = vec3(1.0); //trace back attenuation of color start with white
+
+	for(int i = 0; i < EYEPATHLENGTH; ++i) 
 	{
 		vec3 normal;
 		float material;
-        float t = intersect( ro, rd, normal, material );
+		float t = intersect( ro, rd, normal, material );
 		if(!(t < BIG_NUMBER)) break; //nothing hit
-        if( matIsLight( material ) ) 
-		{	//hit light source
-            return color * LIGHTCOLOR;
-        }
-        
-        ro = ro + t * rd; // next intersection point
-        rd = coordinateSystem( normal ) * cosWeightedRandomHemisphereDirection(); //new ray direction from diffuse brdf
-        color *= matColor( material ); // material color interaction -> attenuate color by material color
-        // rd = coordinateSystem( normal ) * randomHemisphereDirection(); //new ray direction from diffuse brdf
-		// color *= matColor( material ) * 2.0 * dot(normal, rd);
-    }    
-    return vec3(0); //did not hit light source -> black ray
+		if( matIsLight( material ) ) 
+		{
+			//hit light source
+			return color * LIGHTCOLOR;
+		}
+
+		ro = ro + t * rd; // next intersection point
+//		rd = coordinateSystem( normal ) * cosWeightedRandomHemisphereDirection(); //new ray direction from diffuse BRDF
+//		color *= matColor( material ); // material color interaction -> attenuate color by material color
+		rd = coordinateSystem( normal ) * randomHemisphereDirection(); //new ray direction from diffuse BRDF
+		color *= matColor( material ) * 2.0 * dot(normal, rd);
+	}
+	return vec3(0); //did not hit light source -> black ray
 }
 
 mat3 lookAt(vec3 position, vec3 target)

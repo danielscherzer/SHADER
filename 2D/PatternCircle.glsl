@@ -1,4 +1,4 @@
-#version 330
+#version 120
 // idea from http://thebookofshaders.com/edit.php#09/marching_dots.frag
 
 uniform vec2 iResolution;
@@ -41,10 +41,9 @@ vec3 mainImage(vec2 coord) {
 	return circle(coord, 0.3) * white;
 }
 
-out vec4 fragColor;
 void main() {
 	//coordinates in range [0,1]
 	vec2 coord = gl_FragCoord.xy/iResolution;
 	coord.x *= iResolution.x / iResolution.y; //aspect
-	fragColor = vec4(mainImage(coord), 1.0);
+	gl_FragColor = vec4(mainImage(coord), 1.0);
 }

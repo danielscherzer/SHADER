@@ -9,7 +9,7 @@ float iTime = iGlobalTime;
 
 const float epsilon = 1e-4;
 const int maxSteps = 256;
-const int ITERATIONS = 6;
+const int ITERATIONS = 5;
 
 //adapted from  http://www.iquilezles.org/www/articles/menger/menger.htm
 
@@ -36,7 +36,7 @@ float map( in vec3 p )
     float s = 1.0;
     for( int m = 0; m < ITERATIONS; ++m)
     {
-//		p = mix( p, ma*(p+off), ani );
+		p = mix( p, ma*(p+off), ani );
 		vec3 a = mod( p*s, 2.0 )-1.0;
 		s *= 3.0;
 		vec3 r = abs(1.0 - 3.0 * abs(a));

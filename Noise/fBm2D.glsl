@@ -39,12 +39,11 @@ float fBm(vec2 coord)
 	return value;
 }
 
+out vec3 color;
 void main() {
-    vec2 st = gl_FragCoord.xy/iResolution;
-    st.x *= iResolution.x/iResolution.y;
+	vec2 st = gl_FragCoord.xy/iResolution;
+	st.x *= iResolution.x/iResolution.y;
 
-    vec3 color = vec3(0.0);
-    color += fBm(10 * st);
-
-    gl_FragColor = vec4(color,1.0);
+	color = vec3(0.0);
+	color += fBm(10 * st);
 }

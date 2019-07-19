@@ -16,6 +16,7 @@ float distFunc(vec3 point)
 	return dist2sphere(point, vec3(0, 0, 1), 0.3);
 }
 
+out vec4 fragColor;
 void main()
 {
 	vec3 camP = calcCameraPos();
@@ -44,10 +45,10 @@ void main()
 
 	if(objectHit)
 	{
-		gl_FragColor = vec4(0, 0, 1, 1);
+		fragColor = vec4(0, 0, 1, 1);
 	}
 	else
 	{
-		gl_FragColor = vec4(0, 0, 0, 1);
+		fragColor = vec4(0, 0, 0, 1);
 	}
 }

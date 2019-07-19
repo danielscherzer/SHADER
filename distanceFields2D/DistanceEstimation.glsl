@@ -38,6 +38,7 @@ vec2 gradGPU(const vec2 coord, const float pixelDelta)
 	return vec2( dFdx(f), dFdy(f) ) / pixelDelta;
 }
 
+out vec3 fragColor;
 void main()
 {
 	//create uv to be in the range [0..1]²
@@ -68,8 +69,6 @@ void main()
 	float blurryness = 0.012; //control sharpness
 	// subSet = smoothstep(thickness, thickness + blurryness, d); // repeat step	
 	
-	vec3 color = vec3(subSet);	
-	
-	gl_FragColor = vec4(color, 1.0);
+	fragColor = vec3(subSet);
 }
 

@@ -88,10 +88,11 @@ vec2 field(vec2 pos) {
 	return vec2(cos(pos.x * 0.01 + pos.y * 0.01) + cos(pos.y * 0.005 + iTime), 2.0 * cos(pos.y * 0.01  + iTime * 0.3)) * 0.5;
 }
 
+out vec3 fragColor;
 void main()
 {
 	vec2 pos = gl_FragCoord.xy;
 	float isArrow = arrow(pos, field(arrowTileCenterCoord(pos)) * ARROW_TILE_SIZE * 0.4);
 	
-	gl_FragColor = vec4(isArrow);
+	fragColor = vec3(isArrow);
 }

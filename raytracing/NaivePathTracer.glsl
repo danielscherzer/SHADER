@@ -208,7 +208,7 @@ vec3 getBRDFRay( in vec3 n, const vec3 dirIn, const float material )
 			float r0 = (n1 - n2) / (n1 + n2); 
 			r0 *= r0;
 			float fresnel = r0 + (1.0 - r0) * pow(1.0 - abs(ndotr), 5.0);
-			//choose reflection or refraction according to fresnel and random threshold
+			//choose reflection or refraction according to Fresnel and random threshold
 			return hash1() < fresnel ? reflect( dirIn, n ) : refract( dirIn, n, n2/n1 );
 		}
 		return reflect( dirIn, n ); //reflective
@@ -260,7 +260,7 @@ void main()
 
     seed = gl_FragCoord.x + gl_FragCoord.y * 3.43121412313; //each pixel gets its own random seed
     
-    vec3 color = vec3(0.0); // for color accumluation
+    vec3 color = vec3(0.0); // for color accumulation
     for( int i = 0; i < SAMPLES; ++i ) // loop over samples
 	{
 		//generate random ray direction for sample
