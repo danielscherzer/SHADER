@@ -51,6 +51,7 @@ float SeedFrost(vec2 coord)
 	return min(1, frost);
 }
 
+out vec4 fragColor;
 void main() 
 {
 	float lava = SeedLava(uv);
@@ -60,5 +61,5 @@ void main()
 	//coloring
 	vec4 color = Save(lava, frost);
 	if(3 == int(iMouse.z)) color = vec4(0); //clear on right button
-	gl_FragColor = vec4(clamp(color, vec4(0), vec4(1)));
+	fragColor = vec4(clamp(color, vec4(0), vec4(1)));
 }
