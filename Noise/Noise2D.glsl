@@ -1,5 +1,5 @@
-///idea from http://thebookofshaders.com/edit.php#09/marching_dots.frag
 #version 330
+//idea from http://thebookofshaders.com/edit.php#09/marching_dots.frag
 
 float quinticInterpolation(float x)
 {

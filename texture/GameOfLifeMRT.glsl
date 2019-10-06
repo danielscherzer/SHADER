@@ -11,11 +11,12 @@ uniform float iSoftness = 0.01;
 
 in vec2 uv;
 
-out vec4 color;
-out vec4 isObstacle;
+layout(location = 0) out vec4 color;
+layout(location = 1) out vec4 isObstacle;
 
 
-float wasObstacle() {
+float wasObstacle()
+{
 	return texture2D(texLastFrame1, uv).a;
 }
 
@@ -62,7 +63,7 @@ float gameStep() {
 	int neighbors = countNeighbors(uv, isLive);
 	
 	//apply game rules:
-	//living bacteria keep on lifing if the have 2 or 3 neighbors
+	//living bacteria keep on living if the have 2 or 3 neighbors
 	//new bacteria start to life if they have exactly 3 neighbors
 	if (isLive)
 	{
@@ -82,7 +83,7 @@ vec4 calcNewColor(float seed)
 	//ghosting
 	color += 0.999 * texture2D(texLastFrame0, uv).rgb;
 	color -= 1.0 / 1024.0; //dim over time to avoid leftovers
-	color = clamp(color, vec3(0), vec3(1));	
+	color = clamp(color, vec3(0), vec3(1));
 	return vec4(color, live);
 }
 

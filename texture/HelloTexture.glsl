@@ -2,7 +2,8 @@
 
 uniform vec2 iResolution;
 uniform float iGlobalTime;
-uniform sampler2D tex;
+uniform sampler2D tex0;
+uniform sampler2D tex1;
 
 void main()
 {
@@ -15,6 +16,8 @@ void main()
 	// uv.y += sin(uv.x * Frequency  + Phase) * Amplitude;
 	
 	//lookup color in texture at position uv
-	vec3 color = texture(tex, uv).rgb;
+	vec3 color1 = texture(tex0, uv).rgb;
+	vec3 color2 = texture(tex1, uv).rgb;
+	vec3 color = mix(color1, color2, 0.5);
 	gl_FragColor = vec4(color, 1.0);
 }

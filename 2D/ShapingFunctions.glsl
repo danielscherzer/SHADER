@@ -83,6 +83,7 @@ float function(float x)
 //	y = mod(x + 1, 2.0) - 1; // step 19 
 //	y = abs(mod(x + 1, 2.0) - 1); // step 20 repeated tent
 //	y = step(2, mod(x, 4.0)); // step 21 repeat step
+	// y = x - fract(x) + smoothstep(0, 0.25, fract(x)); // staircase
 //	y = smoothstep(-0.5, 1, cos(x)) * 2; // step 22 
 	float fact = 1;
 //	y = floor(x / fact); // step 23 
@@ -97,23 +98,9 @@ float function(float x)
 	// y = rand(x); // step 32
 	// y = rand(ceil(x + 0.5)) * 5; // step 33
 	// y = noise(x - mouse.x * 30); // step 34
-	// y = gnoise(x - mouse.x * 30); // step 34
+//	y = gnoise(x - mouse.x * 30); // step 34
 	// y = noise(x + mouse.x * 100) + 0.1 * noise(16*x); // step 35 
 	return y;
-}
-
-//draw function line
-float plotFunction(vec2 coord, vec2 screenDelta)
-{
-	float f = function(coord.x) - coord.y;
-	float dist = abs(f);
-	
-	vec2 gradient = vec2(dFdx(f), dFdy(f));
-	float filterWidth = length(gradient) * 2.0;
-	return 1 - smoothstep(0, filterWidth, dist);
-
-	// return 1 - step(0.1, dist);
-	// return 1 - smoothstep(0, screenDelta.y, dist);
 }
 
 float distPointLine(vec2 point, vec2 a, vec2 b)
@@ -124,15 +111,26 @@ float distPointLine(vec2 point, vec2 a, vec2 b)
 	return numerator / denominator;
 }
 
-float plotDifferentiableFunction(vec2 coord, vec2 screenDelta)
+//draw function line
+float plotFunction(vec2 coord, vec2 screenDelta)
 {
+	float f = function(coord.x) - coord.y;
+	float dist = abs(f);
+	
+	return 1 - step(0.1, dist);
+	// return 1 - smoothstep(0, screenDelta.y, dist);
+
+	// vec2 gradient = vec2(dFdx(f), dFdy(f));
+	// float filterWidth = length(gradient) * 2.0;
+	// return 1 - smoothstep(0, filterWidth, dist);
+
 	//use central difference to make a line approximation
-	float ax = coord.x - EPSILON;
-	float bx = coord.x + EPSILON;
-	vec2 a = vec2(ax, function(ax));
-	vec2 b = vec2(bx, function(bx));
-	float dist = distPointLine(coord, a, b);
-	return 1 - smoothstep(0, screenDelta.y, dist);
+	// float ax = coord.x - EPSILON;
+	// float bx = coord.x + EPSILON;
+	// vec2 a = vec2(ax, function(ax));
+	// vec2 b = vec2(bx, function(bx));
+	// float dist = distPointLine(coord, a, b);
+	// return 1 - smoothstep(0, screenDelta.y, dist);
 }
 
 out vec4 fragColor;
@@ -158,7 +156,6 @@ void main() {
 	color *= gridColor;
 	
 	//function
-	// float graph = plotDifferentiableFunction(coord, 4 * screenDelta);
 	float graph = plotFunction(coord, 4 * screenDelta);
 
 	// combine

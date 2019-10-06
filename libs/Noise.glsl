@@ -24,7 +24,7 @@ float rand(vec2 seed) {
 vec2 rand2(vec2 seed)
 {
 	const float pi = 3.1415926535897932384626433832795;
-	const float twopi = 2 * pi;
+	const float twopi = 2.0 * pi;
 	float r = rand(seed) * twopi;
 	return vec2(cos(r), sin(r));
 }

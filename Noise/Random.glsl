@@ -1,5 +1,5 @@
-// idea from http://thebookofshaders.com
 #version 330
+// idea from http://thebookofshaders.com
 
 uniform vec2 iResolution;
 uniform float iGlobalTime;
