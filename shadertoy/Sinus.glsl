@@ -1,4 +1,4 @@
-#version 120
+#version 140
 
 uniform vec3 iMouse;
 uniform vec2 iResolution;

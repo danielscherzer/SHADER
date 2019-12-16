@@ -10,7 +10,7 @@ precision mediump float;
 float time=iGlobalTime;
 
 float distFunc(vec3 p){
-    return length(mod(p+vec3(0,0,mod(-time*19.,4.)),4.)-2.)-.4;
+    return length(mod(p+vec3(0,0,mod(-time*19.,4.)),4.)-2.)-0.4;
 }
 
 vec3 getNormal(vec3 p){

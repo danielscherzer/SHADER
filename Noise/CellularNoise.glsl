@@ -1,4 +1,4 @@
-#version 110
+#version 140
 //idea from http://thebookofshaders.com
 
 vec2 random2( vec2 p ) {

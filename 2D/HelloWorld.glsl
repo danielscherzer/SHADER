@@ -10,7 +10,7 @@ void main()
 	//4 component color red, green, blue, alpha
 	vec4 color = vec4(0.6, 0.2, 0.7, 1.0);
 	float red = floor(uv.y * 10.0) / 10.0; // step 1
-	vec4 colorA = vec4(red, 1 - red, 0.0, 1.0); // step 1
+	vec4 colorA = vec4(red, 1.0 - red, 0.0, 1.0); // step 1
 	vec4 colorB = vec4(red, red, 1.0, 1.0); // step 1
 	color = mix(colorA, colorB, uv.x); // step 1
 //	color.rg = uv * (sin(iGlobalTime) * 0.5 + 1);

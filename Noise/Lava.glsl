@@ -1,4 +1,4 @@
-#version 120
+#version 140
 // idea from http://thebookofshaders.com/edit.php#09/marching_dots.frag
 
 #include "../libs/Noise.glsl"
