@@ -1,7 +1,7 @@
 #version 140
 // idea from http://thebookofshaders.com/edit.php#09/marching_dots.frag
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 float circle(vec2 coord, float radius)
@@ -43,7 +43,7 @@ vec3 mainImage(vec2 coord) {
 
 void main() {
 	//coordinates in range [0,1]
-	vec2 coord = gl_FragCoord.xy/iResolution;
-	coord.x *= iResolution.x / iResolution.y; //aspect
+	vec2 coord = gl_FragCoord.xy/u_resolution;
+	coord.x *= u_resolution.x / u_resolution.y; //aspect
 	gl_FragColor = vec4(mainImage(coord), 1.0);
 }

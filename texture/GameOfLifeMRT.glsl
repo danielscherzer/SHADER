@@ -1,6 +1,6 @@
 #version 330
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform vec3 iMouse;
 uniform sampler2D texLastFrame0;
@@ -23,10 +23,10 @@ float wasObstacle()
 float drawMouseCircle()
 {
 	// here pixels of a circle
-	float aspect = iResolution.x / iResolution.y;
+	float aspect = u_resolution.x / u_resolution.y;
 	vec2 pos = uv;
 	pos.x *= aspect;
-	vec2 pmouse = iMouse.xy / iResolution;
+	vec2 pmouse = iMouse.xy / u_resolution;
 	pmouse.x *= aspect;
 	float circle = 1.0 - smoothstep(iThicknessRadius, iThicknessRadius + iSoftness, distance(pmouse, pos));
 	return circle;
@@ -41,7 +41,7 @@ float calcNewObstacle()
 
 int countNeighbors(vec2 uv, bool isLive) 
 {
-	vec2 uvUnit = 1.0 / iResolution.xy;
+	vec2 uvUnit = 1.0 / u_resolution.xy;
 	int count = 0;
 	#define KERNEL_R 1
 	for (int y = -KERNEL_R; y <= KERNEL_R; ++y)

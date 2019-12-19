@@ -3,7 +3,7 @@
 #include "../libs/camera.glsl"
 #include "../libs/operators.glsl"
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 
 const float epsilon = 1e-3;
 const int maxSteps = 256;
@@ -41,7 +41,7 @@ out vec3 color;
 void main()
 {
 	vec3 camP = calcCameraPos();
-	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
+	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 
 	//start point is the camera position
 	vec3 point = camP;

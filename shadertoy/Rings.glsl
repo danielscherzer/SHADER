@@ -1,6 +1,6 @@
 //idea from http://glsl.heroku.com/
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 varying vec2 uv;
 		
@@ -11,7 +11,7 @@ void main()
 	float radius = 400.0;
 	float gap = 4.0;
 	vec2 pos = (uv - 0.5);
-	vec2 mouse = iMouse.xy / iResolution;
+	vec2 mouse = iMouse.xy / u_resolution;
 	float d = length(400.0 * pos);
 	// Create the wiggle
 	d += 50.0 * mouse.x * (sin(pos.y*scale+iGlobalTime)*sin(pos.x*scale+iGlobalTime*.5));

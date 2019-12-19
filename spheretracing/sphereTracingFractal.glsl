@@ -4,7 +4,7 @@
 #include "../libs/hg_sdf.glsl"
 #include "../libs/operators.glsl"
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 const float epsilon = 0.001;
@@ -113,7 +113,7 @@ float ambientOcclusion(vec3 point, float delta, int samples)
 void main()
 {
 	vec3 camP = calcCameraPos();
-	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
+	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 
 	//start point is the camera position
 	vec3 point = camP; 	

@@ -3,7 +3,7 @@
 #include "../libs/Noise.glsl"
 
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 float absNoise(vec2 coord)
@@ -41,8 +41,8 @@ float fBm(vec2 coord)
 
 out vec3 color;
 void main() {
-	vec2 st = gl_FragCoord.xy/iResolution;
-	st.x *= iResolution.x/iResolution.y;
+	vec2 st = gl_FragCoord.xy/u_resolution;
+	st.x *= u_resolution.x/u_resolution.y;
 
 	color = vec3(0.0);
 	color += fBm(10 * st);

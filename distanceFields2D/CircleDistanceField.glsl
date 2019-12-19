@@ -1,13 +1,13 @@
 #version 330
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 out vec4 fragColor;
 void main()
 {
 	//create uv to be in the range [0..1]²
-	vec2 uv = gl_FragCoord.xy / iResolution;
+	vec2 uv = gl_FragCoord.xy / u_resolution;
 	//4 component color red, green, blue, alpha
 	vec4 color =  vec4(1);
 
@@ -16,7 +16,7 @@ void main()
 	uv *= 8.0;
 
 	//account for window aspect
-	float aspect = iResolution.x / iResolution.y;
+	float aspect = u_resolution.x / u_resolution.y;
 	uv.x *= aspect;
 	
 	//rotate circle centers over time

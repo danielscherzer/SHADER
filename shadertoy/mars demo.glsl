@@ -4,7 +4,7 @@
 
 uniform vec3 iMouse;
 uniform float iGlobalTime;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 
 #define RAYMARCHSTEPS 550
 
@@ -35,9 +35,9 @@ float heightField( vec2 coord)
 
 void main()
 {
-	vec2 q = gl_FragCoord.xy / iResolution.xy;
+	vec2 q = gl_FragCoord.xy / u_resolution.xy;
 	vec2 p = 2 * q - 1;
-	p.x *= iResolution.x / iResolution.y;
+	p.x *= u_resolution.x / u_resolution.y;
 	
 	vec2 pos = vec2( -0.5, iGlobalTime + 5.5);
 	

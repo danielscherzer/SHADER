@@ -2,7 +2,7 @@
 
 uniform vec3 iMouse;
 uniform float iSeedRadius = 0.07;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform sampler2D texLastFrame0;
 
@@ -10,7 +10,7 @@ in vec2 uv;
 
 int countNeighbors(vec2 uv, bool isLive) 
 {
-	vec2 uvUnit = 1.0 / iResolution.xy;
+	vec2 uvUnit = 1.0 / u_resolution.xy;
 	int count = 0;
 	#define KERNEL_R 1
 	for (int y = -KERNEL_R; y <= KERNEL_R; ++y)
@@ -47,10 +47,10 @@ float gameStep() {
 float seedValue()
 {
 	// here pixels of a circle
-	float aspect = iResolution.x / iResolution.y;
+	float aspect = u_resolution.x / u_resolution.y;
 	vec2 pos = uv;
 	pos.x *= aspect;
-	vec2 pmouse = iMouse.xy / iResolution;
+	vec2 pmouse = iMouse.xy / u_resolution;
 	pmouse.x *= aspect;
 	return distance(pmouse, pos) < iSeedRadius ? 1.0 : 0.0;
 }

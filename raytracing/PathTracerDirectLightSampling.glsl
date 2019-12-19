@@ -1,6 +1,6 @@
 #version 120
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 // based on:
 // Simple path tracer. Created by Reinder Nijhoff 2014
@@ -290,10 +290,10 @@ vec3 traceEyePath( in vec3 ro, in vec3 rd, const in bool directLightSampling ) {
 //-----------------------------------------------------
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
-	vec2 q = fragCoord.xy / iResolution.xy;
+	vec2 q = fragCoord.xy / u_resolution.xy;
     
 #ifdef SHOWSPLITLINE
-	float splitCoord = (iMouse.x == 0.0) ? iResolution.x/2. + iResolution.x*cos(iGlobalTime*.5) : iMouse.x;
+	float splitCoord = (iMouse.x == 0.0) ? u_resolution.x/2. + u_resolution.x*cos(iGlobalTime*.5) : iMouse.x;
     bool directLightSampling = fragCoord.x < splitCoord;
 #else
     bool directLightSampling = true;
@@ -302,8 +302,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     // camera
     //-----------------------------------------------------
 
-    vec2 p = -1.0 + 2.0 * (fragCoord.xy) / iResolution.xy;
-    p.x *= iResolution.x/iResolution.y;
+    vec2 p = -1.0 + 2.0 * (fragCoord.xy) / u_resolution.xy;
+    p.x *= u_resolution.x/u_resolution.y;
 
 #ifdef ANIMATENOISE
     seed = p.x + p.y * 3.43121412313 + fract(1.12345314312*iGlobalTime);
@@ -327,7 +327,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     
     for( int a=0; a<SAMPLES; a++ ) {
 
-        vec2 rpof = 4.*(hash2()-vec2(0.5)) / iResolution.xy;
+        vec2 rpof = 4.*(hash2()-vec2(0.5)) / u_resolution.xy;
 	    vec3 rd = normalize( (p.x+rpof.x)*uu + (p.y+rpof.y)*vv + 3.0*ww );
         
 #ifdef DOF

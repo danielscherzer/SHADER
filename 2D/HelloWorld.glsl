@@ -1,12 +1,12 @@
 #version 140
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 void main()
 {
 	//create uv to be in the range [0..1]x[0..1]
-	vec2 uv = gl_FragCoord.xy / iResolution;
+	vec2 uv = gl_FragCoord.xy / u_resolution;
 	//4 component color red, green, blue, alpha
 	vec4 color = vec4(0.6, 0.2, 0.7, 1.0);
 	float red = floor(uv.y * 10.0) / 10.0; // step 1

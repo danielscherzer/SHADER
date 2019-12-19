@@ -3,7 +3,7 @@
 #include "../libs/camera.glsl"
 #include "../libs/rayIntersections.glsl"
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 in vec2 uv;
 
@@ -248,7 +248,7 @@ TraceState refraction(const  TraceState state)
 void main()
 {
 	vec3 camP = calcCameraPos();
-	vec3 camDir = calcCameraRayDir(70.0, gl_FragCoord.xy, iResolution);
+	vec3 camDir = calcCameraRayDir(70.0, gl_FragCoord.xy, u_resolution);
 	
 	//primary ray
 	TraceState state = traceStep(Ray(camP, camDir));

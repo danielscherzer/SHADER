@@ -1,7 +1,7 @@
 #include "../libs/camera.glsl"
 
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform sampler2D tex;
 
@@ -44,9 +44,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {	
 	vec3 campos = calcCameraPos();
 	campos.y += 500;
-	vec3 ray = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
+	vec3 ray = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 	
-    vec2 uv     = fragCoord.xy/(iResolution.xx*0.5)-vec2(1.0,iResolution.y/iResolution.x);
+    vec2 uv     = fragCoord.xy/(u_resolution.xx*0.5)-vec2(1.0,u_resolution.y/u_resolution.x);
     vec3 pos    = campos+ray;
     vec3 sun    = vec3(0.0,0.6,-0.4);    	
 	

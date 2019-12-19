@@ -7,7 +7,7 @@
 #include "../libs/operators.glsl"
 
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 in vec2 uv;
 
@@ -72,7 +72,7 @@ float function(float x)
 //	y = ceil(x); // step 9 nearest integer that is greater than or equal to x
 //	y = floor(x); // step 10 nearest integer less than or equal to x
 //	y = sign(x); // step 11 extract the sign of x
-	vec2 mouse = iMouse.xy / iResolution;
+	vec2 mouse = iMouse.xy / u_resolution;
 //	y = 5 * mouse.y * sin(x * mouse.x * 5); // step 12 
 //	y = trunc(x); // step 13 
 	// y = abs(sin(x)); // step 14 
@@ -136,9 +136,9 @@ float plotFunction(vec2 coord, vec2 screenDelta)
 out vec4 fragColor;
 void main() {
 	//map coordinates in range [0,1]
-	vec2 coord01 = gl_FragCoord.xy/iResolution;
+	vec2 coord01 = gl_FragCoord.xy/u_resolution;
 	//screen aspect
-	float aspect = 1;//iResolution.x / iResolution.y;
+	float aspect = 1;//u_resolution.x / u_resolution.y;
 	//coordinate system corners
 	float delta = 8;
 	vec2 lowerLeft = vec2(-delta * aspect, -delta);
@@ -146,7 +146,7 @@ void main() {
 	//setup coordinate system
 	vec2 coord = map(coord01, lowerLeft, upperRight);
 	//calculate just visible screen deltas
-	vec2 screenDelta = screenDelta(iResolution, lowerLeft, upperRight);
+	vec2 screenDelta = screenDelta(u_resolution, lowerLeft, upperRight);
 
 	//axis
 	vec3 color = vec3(onAxis(coord, 2 * screenDelta));

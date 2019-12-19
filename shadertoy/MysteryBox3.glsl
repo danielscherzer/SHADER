@@ -1,5 +1,5 @@
 uniform vec2 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 varying vec2 uv;
 		
@@ -105,9 +105,9 @@ vec3 render( in vec3 ro, in vec3 rd )
 void main( void )
 {
 
-	vec2 q = gl_FragCoord.xy/iResolution.xy;
+	vec2 q = gl_FragCoord.xy/u_resolution.xy;
 	vec2 p = -1.0+2.0*q;
-	p.x *= iResolution.x/iResolution.y;
+	p.x *= u_resolution.x/u_resolution.y;
 	
 	// camera 
 	vec3 ro = vec3( 1.0*cos(0.2*iGlobalTime), 0.3, 1.0*sin(0.1*iGlobalTime) );

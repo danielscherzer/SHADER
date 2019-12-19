@@ -4,7 +4,7 @@
 #include "../libs/operators.glsl"
 #include "../libs/noise3D.glsl"
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 const float epsilon = 0.0001;
@@ -46,7 +46,7 @@ vec3 shade(vec3 point)
 void main()
 {
 	vec3 camP = calcCameraPos();
-	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
+	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 
 	//start point is the camera position
 	vec3 point = camP; 	

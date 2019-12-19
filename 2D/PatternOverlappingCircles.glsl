@@ -1,6 +1,6 @@
 #version 330
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 float outsideCircle(vec2 coord, vec2 center, float radius)
@@ -23,8 +23,8 @@ vec2 octantSymmetry(vec2 coord)
 out vec4 color;
 void main() {
 	// coordinates in range [0,1]
-	vec2 coord = gl_FragCoord.xy / iResolution;
-	coord.x *= iResolution.x / iResolution.y;
+	vec2 coord = gl_FragCoord.xy / u_resolution;
+	coord.x *= u_resolution.x / u_resolution.y;
 	
 	// grid
 	coord *= 20;

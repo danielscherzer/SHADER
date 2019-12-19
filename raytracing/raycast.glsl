@@ -1,5 +1,5 @@
 #version 420
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 const float bigNumber = 10000.0;
@@ -55,8 +55,8 @@ void main()
 {
 	//camera setup
 	float fov = radians(90.0);
-	float fx = tan(fov / 2) / iResolution.x;
-	vec2 d = fx * (gl_FragCoord.xy * 2.0 - iResolution.xy);
+	float fx = tan(fov / 2) / u_resolution.x;
+	vec2 d = fx * (gl_FragCoord.xy * 2.0 - u_resolution.xy);
 
 	vec3 camP = vec3(0.0, 0.0, 0.0);
 	vec3 camDir = normalize(vec3(d.x, d.y, 1.0));

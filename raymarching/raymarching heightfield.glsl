@@ -4,7 +4,7 @@
 #include "../libs/rayIntersections.glsl"
 
 uniform float iGlobalTime;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform sampler2D tex0;
 uniform sampler2D tex1;
 
@@ -117,7 +117,7 @@ vec3 terrainColor(Ray ray, float t)
 void main()
 {
 	vec3 camP = calcCameraPos();
-	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
+	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 	Ray ray = Ray(camP, camDir);
 
 	int maxSteps = 1000;

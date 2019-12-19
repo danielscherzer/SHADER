@@ -3,7 +3,7 @@
 #include "../libs/noise3d.glsl"
 
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform sampler2D texLastFrame0;
 
@@ -26,7 +26,7 @@ float SeedLava(vec2 coord)
 
 float NeighborFrost(vec2 uv) 
 {
-	vec2 uvUnit = 1.0 / iResolution.xy;
+	vec2 uvUnit = 1.0 / u_resolution.xy;
 	float frost = 0;
 	for (int y = -1; y <= 1; ++y)
 	{
@@ -45,7 +45,7 @@ float SeedFrost(vec2 coord)
 	if(1 == int(iMouse.z))
 	{
 		//player adds small circle of destruction
-		vec2 mouse = iMouse.xy / iResolution;
+		vec2 mouse = iMouse.xy / u_resolution;
 		frost += distance(coord, mouse) < 0.01 ? 1 : 0;
 	}
 	return min(1, frost);

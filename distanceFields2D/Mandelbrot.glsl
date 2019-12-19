@@ -4,7 +4,7 @@
 const float EPSILON = 10e-4;
 const float BIG_NUMBER = 1e3;
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform vec3 iMouse;
 	
@@ -28,8 +28,8 @@ vec2 dMandelBrotStep(vec2 zn, vec2 dzn)
 //create uv to be in the range [0..1]² and then correct aspect ratio
 vec2 normCoord(vec2 rasterCoord)
 {
-	vec2 uv = rasterCoord / iResolution;
-	uv.x *= iResolution.x / iResolution.y;
+	vec2 uv = rasterCoord / u_resolution;
+	uv.x *= u_resolution.x / u_resolution.y;
 	return uv;
 }
 

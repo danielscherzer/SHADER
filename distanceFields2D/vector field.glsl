@@ -1,7 +1,7 @@
 #version 330
 
 uniform float iGlobalTime;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 float iTime = iGlobalTime;
 
 // 2D vector field visualization by Morgan McGuire, @morgan3d, http://casual-effects.com

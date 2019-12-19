@@ -1,7 +1,7 @@
 #version 330
 #include "../libs/camera.glsl"
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 
 const float epsilon = 0.0001;
 const int maxSteps = 128;
@@ -60,7 +60,7 @@ vec3 getNormal(vec3 point, float delta)
 void main()
 {
 	vec3 camP = calcCameraPos() ;//+ vec3(0, 0, -1);
-	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
+	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 
 	//start point is the camera position
 	vec3 point = camP; 	

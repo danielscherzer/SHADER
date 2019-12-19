@@ -1,5 +1,5 @@
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 varying vec2 uv;
 		
@@ -23,7 +23,7 @@ vec3 getNormal(vec3 p){
 }
 
 void main(){
-	vec2 p=(gl_FragCoord.xy*2.-iResolution.xy)/iResolution.x;
+	vec2 p=(gl_FragCoord.xy*2.-u_resolution.xy)/u_resolution.x;
 	vec3 camP=vec3(0.,0.,1.);
 	vec3 camC=vec3(sin(time*.7)*.3,0.,0.);
 	vec3 camU=normalize(vec3(sin(time)*.1,1.,0.));

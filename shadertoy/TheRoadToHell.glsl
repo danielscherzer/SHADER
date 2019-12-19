@@ -1,5 +1,5 @@
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 varying vec2 uv;
 
@@ -85,8 +85,8 @@ void main(void)
 	vec3 cameraPos = vec3(1.0 - 0.325 * sin(speed), 1.0, 0.5 - speed * 2.5);
     
 	//calculate ray direction
-	vec2 pos = - 1.0 + 2.0 * (gl_FragCoord.xy / iResolution.xy); //[-1..1]
-	float aspect = iResolution.x / iResolution.y;
+	vec2 pos = - 1.0 + 2.0 * (gl_FragCoord.xy / u_resolution.xy); //[-1..1]
+	float aspect = u_resolution.x / u_resolution.y;
     vec3 dir = normalize(vec3(pos.x * aspect, pos.y, 1.0));
 	
 	//animate camera direction

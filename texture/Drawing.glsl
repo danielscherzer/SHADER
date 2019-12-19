@@ -1,6 +1,6 @@
 #version 120
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform vec3 iMouse;
 uniform sampler2D texLastFrame0;
@@ -18,10 +18,10 @@ vec4 oldColor() {
 float drawValue()
 {
 	// here pixels of a circle
-	float aspect = iResolution.x / iResolution.y;
+	float aspect = u_resolution.x / u_resolution.y;
 	vec2 pos = uv;
 	pos.x *= aspect;
-	vec2 pmouse = iMouse.xy / iResolution;
+	vec2 pmouse = iMouse.xy / u_resolution;
 	pmouse.x *= aspect;
 	float leftDown = clamp(iMouse.z, 0.0, 1.0);
 	float circle = 1.0 - smoothstep(iThicknessRadius, iThicknessRadius + iSoftness, distance(pmouse, pos));

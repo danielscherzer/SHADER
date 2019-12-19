@@ -5,7 +5,7 @@
 #include "../libs/noise3D.glsl" //uncomment for simplex noise: slower but more "fractal"
 
 uniform float iGlobalTime;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 
 float time = iGlobalTime + 0.7;
 
@@ -121,7 +121,7 @@ out vec4 colorOut;
 void main()
 {
 	vec3 camP = calcCameraPos();
-	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
+	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 
 	vec3 color = render( Ray( camP, camDir ) );
 	colorOut = vec4(color, 1.0 );

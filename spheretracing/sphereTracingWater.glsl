@@ -7,7 +7,7 @@
 #include "../libs/Noise3D.glsl"
 #include "../libs/hg_sdf.glsl"
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 const float epsilon = 0.0001;
@@ -163,7 +163,7 @@ void main()
 {
 	vec3 camP = calcCameraPos();
 	camP.y += 2;
-	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
+	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 
 	float maxT = 100;
 	//start point is the camera position

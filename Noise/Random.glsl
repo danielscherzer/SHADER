@@ -1,7 +1,7 @@
 #version 330
 // idea from http://thebookofshaders.com
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform vec3 iMouse;
 
@@ -24,9 +24,9 @@ float random(vec2 coord) {
 out vec3 color;
 void main() {
 	//coordinates in range [0,1]
-	vec2 coord = gl_FragCoord.xy/iResolution;
+	vec2 coord = gl_FragCoord.xy/u_resolution;
 	
-	vec2 mouse = iMouse.xy / iResolution;
+	vec2 mouse = iMouse.xy / u_resolution;
 	
 	float value = random(coord.x - mouse.x);
 //	value = random(coord.x - iGlobalTime * 0.1); // step 1 

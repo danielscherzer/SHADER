@@ -78,14 +78,14 @@ float gnoise(vec2 coord)
 	return mix(x1, x2, weight.y) + 0.5;
 }
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform vec3 iMouse;
 
 out vec3 color;
 void main() {
 	//coordinates in range [0,1]
-	vec2 coord = gl_FragCoord.xy/iResolution;
+	vec2 coord = gl_FragCoord.xy/u_resolution;
 	
 	float value = rand(coord);
 //	value = noise(coord * 10);

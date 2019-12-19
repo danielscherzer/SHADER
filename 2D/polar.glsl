@@ -4,19 +4,19 @@ const float PI = 3.14159265359;
 const float TWOPI = 2 * PI;
 const float EPSILON = 10e-4;
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 out vec3 fragColor;
 void main()
 {
-	vec2 uv = gl_FragCoord.xy/iResolution.xy;
+	vec2 uv = gl_FragCoord.xy/u_resolution.xy;
 	vec3 color = vec3(0.0);
 	
 	// range [-1..1]²
 	uv = vec2(1) - 2 * uv;
 	//aspect correction
-	uv.x *= iResolution.x / iResolution.y;
+	uv.x *= u_resolution.x / u_resolution.y;
 	
 	//cartesian to polar coordinates
 	float r = length(uv); // radius of current pixel

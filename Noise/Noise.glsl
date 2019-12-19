@@ -1,6 +1,6 @@
 #version 330
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform vec3 iMouse;
 
@@ -57,9 +57,9 @@ float gnoise(float u)
 
 void main() {
 	//coordinates in range [0,1]
-    vec2 coord = gl_FragCoord.xy/iResolution;
+    vec2 coord = gl_FragCoord.xy/u_resolution;
 	
-	vec2 mouse = iMouse.xy / iResolution;
+	vec2 mouse = iMouse.xy / u_resolution;
 	mouse *= 20;
 	
 	coord *= 10.0;

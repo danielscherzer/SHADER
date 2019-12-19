@@ -2,7 +2,7 @@
 
 #include "../libs/operators.glsl"
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 float time = iGlobalTime * 0.1;
 	
@@ -54,6 +54,6 @@ vec3 mainImage(vec2 coord)
 out vec4 fragColor;
 void main() {
 	//coordinates in range [0,1]
-	vec2 coord = gl_FragCoord.xy/iResolution;
+	vec2 coord = gl_FragCoord.xy/u_resolution;
 	fragColor = vec4(mainImage(coord), 1.0);
 }

@@ -2,7 +2,7 @@
 
 #include "../libs/camera.glsl"
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 const float epsilon = 0.001;
@@ -85,7 +85,7 @@ out vec4 fragColor;
 void main()
 {
 	vec3 camP = calcCameraPos();
-	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, iResolution);
+	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 	
 	vec3 point = camP;
 	bool objectHit = false;

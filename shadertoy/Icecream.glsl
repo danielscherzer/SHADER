@@ -1,5 +1,5 @@
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 varying vec2 uv;
 		
@@ -123,18 +123,18 @@ vec3 trace_col( vec3 ray, vec3 pos )
 
 void main(void)
 {
-	float aspect = iResolution.x / iResolution.y;
+	float aspect = u_resolution.x / u_resolution.y;
 	
 	const float view_plane_dist = 1.6;
 	const vec3 camera_pos = vec3(0,0,-3);
 	
 	vec3 ray = vec3(
-		((gl_FragCoord[0] / iResolution.x)*2.0-1.0)*aspect,
-		((gl_FragCoord[1] / iResolution.y)*2.0-1.0),
+		((gl_FragCoord[0] / u_resolution.x)*2.0-1.0)*aspect,
+		((gl_FragCoord[1] / u_resolution.y)*2.0-1.0),
 		view_plane_dist );
 
-	float h = iMouse.x/iResolution.x * 8.0 + 1.1;
-	float p = -(iMouse.y/iResolution.y + 1.0) * 2.0;
+	float h = iMouse.x/u_resolution.x * 8.0 + 1.1;
+	float p = -(iMouse.y/u_resolution.y + 1.0) * 2.0;
 	
 	float c = cos(h), s = sin(h);
 	t = iGlobalTime  * TIME_MULT;

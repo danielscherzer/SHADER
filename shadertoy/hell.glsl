@@ -2,7 +2,7 @@
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform sampler2D tex;
 uniform sampler2D tex1;
@@ -79,11 +79,11 @@ vec3 raymarch( in vec3 ro, in vec3 rd, in vec2 pixel )
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-	vec2 q = fragCoord.xy / iResolution.xy;
+	vec2 q = fragCoord.xy / u_resolution.xy;
     vec2 p = -1.0 + 2.0*q;
-    p.x *= iResolution.x/ iResolution.y;
+    p.x *= u_resolution.x/ u_resolution.y;
 	
-    vec2 mo = iMouse.xy / iResolution.xy;
+    vec2 mo = iMouse.xy / u_resolution.xy;
     if( iMouse.z<=0.00001 ) mo=vec2(0.0);
 	
     // camera

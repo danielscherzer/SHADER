@@ -1,6 +1,6 @@
 #version 330
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 const float PI = 3.1415926535897932384626433832795;
@@ -58,9 +58,9 @@ out vec4 outColor;
 void main() 
 {
 	//coordinates in range [0,1]
-	vec2 coord = gl_FragCoord.xy/iResolution;
+	vec2 coord = gl_FragCoord.xy/u_resolution;
 	
-	coord.x *= iResolution.x / iResolution.y; //aspect
+	coord.x *= u_resolution.x / u_resolution.y; //aspect
 	
 //	coord = repeatAndRotate(coord, 3, 0.21); // step 1 repeat
 //	coord = repeatAndRotate(coord, 4, 0.1); // step 3 recursive pattern

@@ -1,13 +1,13 @@
 #version 330
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform sampler2D tex0;
 uniform sampler2D tex1;
 
 void main()
 {
-	vec2 uv = gl_FragCoord.xy / iResolution;
+	vec2 uv = gl_FragCoord.xy / u_resolution;
 	
 	//some wobbeling
 	// float Frequency = 100.0;

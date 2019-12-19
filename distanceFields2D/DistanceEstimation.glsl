@@ -5,7 +5,7 @@ const float PI = 3.14159265359;
 const float TWOPI = 2 * PI;
 const float EPSILON = 10e-4;
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform vec3 iMouse;
 	
@@ -42,16 +42,16 @@ out vec3 fragColor;
 void main()
 {
 	//create uv to be in the range [0..1]²
-	vec2 uv = gl_FragCoord.xy / iResolution;
+	vec2 uv = gl_FragCoord.xy / u_resolution;
 	
 	float threshold = abs(sin(iGlobalTime));
 
 	// range [-1..1]²
 	uv = vec2(1) - 2 * uv;
 	//aspect correction
-	uv.x *= iResolution.x / iResolution.y;
+	uv.x *= u_resolution.x / u_resolution.y;
 	uv *= 2; // range [-2..2]²
-	float pixelDelta = 4.0 / iResolution.y; //range / res
+	float pixelDelta = 4.0 / u_resolution.y; //range / res
 	
 	float f = distField(uv);
 	vec2 g = //uv.x < 0 ? gradGPU(uv, pixelDelta) : 

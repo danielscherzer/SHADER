@@ -3,7 +3,7 @@
 #include "../libs/camera.glsl"
 
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 float time = iGlobalTime;
 // based on: but switched out most of the math
@@ -249,8 +249,8 @@ mat3 lookAt(vec3 position, vec3 target)
 
 void main()
 {
-    vec2 p = -1.0 + 2.0 * (gl_FragCoord.xy) / iResolution.xy; //coordinate range [-1, 1]²
-    p.x *= iResolution.x / iResolution.y; //aspect correction
+    vec2 p = -1.0 + 2.0 * (gl_FragCoord.xy) / u_resolution.xy; //coordinate range [-1, 1]²
+    p.x *= u_resolution.x / u_resolution.y; //aspect correction
     
 	vec3 cameraPos = vec3(2.78, 2.73, -8.00);
     vec3 cameraTarget = vec3(2.78, 2.73,  0.00);
@@ -264,7 +264,7 @@ void main()
     for( int i = 0; i < SAMPLES; ++i ) // loop over samples
 	{
 		//generate random ray direction for sample
-        vec2 rayDelta = 4.0 * (hash2() - vec2(0.5)) / iResolution.xy;
+        vec2 rayDelta = 4.0 * (hash2() - vec2(0.5)) / u_resolution.xy;
 		vec3 rd = normalize(camera * vec3(p + rayDelta, 3.0)); //rotate ray dir with camera basis; big z for smaller fov
         
         color += traceEyePath( cameraPos, rd );

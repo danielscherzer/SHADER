@@ -3,7 +3,7 @@
 
 #include "../libs/Noise.glsl"
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform vec3 iMouse;
 
@@ -24,7 +24,7 @@ vec3 lavaLamp(vec2 coord, float time)
 
 void main() {
 	//coordinates in range [0,1]
-	vec2 coord = gl_FragCoord.xy/iResolution;
+	vec2 coord = gl_FragCoord.xy/u_resolution;
 		
 	vec3 color = lavaLamp(coord * 5, iGlobalTime * 3);
 		

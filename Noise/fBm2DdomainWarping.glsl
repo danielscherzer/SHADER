@@ -3,7 +3,7 @@
 #include "../libs/Noise.glsl"
 
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 //fractal Brownian motion
@@ -29,7 +29,7 @@ float fBm(vec2 coord)
 out vec3 color;
 void main() 
 {
-	vec2 st = gl_FragCoord.xy/iResolution;
+	vec2 st = gl_FragCoord.xy/u_resolution;
 	st *= 10;
 
 	float fBmCoord = fBm(st);

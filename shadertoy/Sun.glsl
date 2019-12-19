@@ -2,7 +2,7 @@
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 float iTime = iGlobalTime;
@@ -78,7 +78,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
    // pos: position on the ray
    // dir: direction of the ray
    vec3 pos = vec3(0.,0.,2.);
-   vec3 dir = vec3((gl_FragCoord.xy/(0.5*iResolution.xy)-1.)*vec2(iResolution.x/iResolution.y,1.0), 0.) - pos;
+   vec3 dir = vec3((gl_FragCoord.xy/(0.5*u_resolution.xy)-1.)*vec2(u_resolution.x/u_resolution.y,1.0), 0.) - pos;
    dir = normalize(dir); 
    
    // ld, td: local, total density 

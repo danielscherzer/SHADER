@@ -1,5 +1,5 @@
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 varying vec2 uv;
 
@@ -159,10 +159,10 @@ vec3 move(inout vec3 dir) {
 
 void main(void)
 {
-	vec2 uv = gl_FragCoord.xy / iResolution.xy*2.-1.;
+	vec2 uv = gl_FragCoord.xy / u_resolution.xy*2.-1.;
 	vec2 oriuv=uv;
-	uv.y*=iResolution.y/iResolution.x;
-	vec2 mouse=(iMouse.xy/iResolution.xy-.5)*3.;
+	uv.y*=u_resolution.y/u_resolution.x;
+	vec2 mouse=(iMouse.xy/u_resolution.xy-.5)*3.;
 	if (iMouse.z<1.) mouse=vec2(0.,-0.05);
 	float fov=.9-max(0.,.7-iGlobalTime*.3);
 	vec3 dir=normalize(vec3(uv*fov,1.));

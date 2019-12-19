@@ -1,6 +1,6 @@
 #version 140
 
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 
 const float PI = 3.14159265359;
@@ -44,9 +44,9 @@ float grid(in vec2 coord)
 
 void main() {
 	//coordinates in range [0,1]
-	vec2 coord = gl_FragCoord.xy / iResolution;
+	vec2 coord = gl_FragCoord.xy / u_resolution;
 	
-	coord.x *= iResolution.x / iResolution.y;
+	coord.x *= u_resolution.x / u_resolution.y;
 	
 	float grid = grid(coord);
 	const vec3 white = vec3(1);

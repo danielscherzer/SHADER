@@ -2,7 +2,7 @@
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 
 uniform vec3 iMouse;
-uniform vec2 iResolution;
+uniform vec2 u_resolution;
 uniform float iGlobalTime;
 uniform sampler2D tex;
 uniform sampler2D tex1;
@@ -195,13 +195,13 @@ mat3 setCamera( in vec3 ro, in vec3 ta, float cr )
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-    vec2 q = fragCoord.xy / iResolution.xy;
+    vec2 q = fragCoord.xy / u_resolution.xy;
 	vec2 p = -1.0 + 2.0*q;
-	p.x *= iResolution.x / iResolution.y;
+	p.x *= u_resolution.x / u_resolution.y;
 	
 	
     // camera	
-	float off = step( 0.001, iMouse.z )*6.0*iMouse.x/iResolution.x;
+	float off = step( 0.001, iMouse.z )*6.0*iMouse.x/u_resolution.x;
 	float time = 2.7+iGlobalTime + off;
 //time =35.0;
 	vec3 ro = path( time+0.0 );
