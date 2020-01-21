@@ -1,7 +1,5 @@
-#version 140
-
 uniform vec2 u_resolution;
-uniform float iGlobalTime;
+uniform float u_time;
 
 void main()
 {
@@ -13,7 +11,7 @@ void main()
 	vec4 colorA = vec4(red, 1.0 - red, 0.0, 1.0); // step 1
 	vec4 colorB = vec4(red, red, 1.0, 1.0); // step 1
 	color = mix(colorA, colorB, uv.x); // step 1
-//	color.rg = uv * (sin(iGlobalTime) * 0.5 + 1);
+	// color.rg = uv * (sin(u_time) * 0.5 + 0.5);
 //	color.rgb = vec3(0, 0, step(0.5, uv.x)); // step 2 
 //	color.rgb = vec3(smoothstep(0.5, 0.55, uv.x)); // step 3
 //	color.rgb = vec3(step(0.5, uv.x) * step(0.5, uv.y)); // step 4

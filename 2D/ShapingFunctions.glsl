@@ -15,14 +15,6 @@ const float PI = 3.14159265359;
 const float TWOPI = 2 * PI;
 const float EPSILON = 10e-4;
 
-// maps normalized [0..1] coordinates 
-// into range [lowerLeft, upperRight]
-vec2 map(vec2 coord01, vec2 lowerLeft, vec2 upperRight)
-{
-	vec2 extents = upperRight - lowerLeft;
-	return lowerLeft + coord01 * extents;
-}
-
 //calculate the smallest just visible width/height for objects
 vec2 screenDelta(vec2 resolution, vec2 lowerLeft, vec2 upperRight)
 {
@@ -39,14 +31,14 @@ float distToInt(float coord)
 vec2 distToInt(vec2 coord)
 {
 	vec2 dist = fract(coord);
-	dist.x = dist.x > 0.5 ? 1 - dist.x : dist.x;
-	dist.y = dist.y > 0.5 ? 1 - dist.y : dist.y;
+	dist.x = dist.x > 0.5 ? 1.0 - dist.x : dist.x;
+	dist.y = dist.y > 0.5 ? 1.0 - dist.y : dist.y;
 	return dist;
 }
 
 float grid(vec2 coord, vec2 screenDelta)
 {
-	vec2 dist = vec2(distToInt(coord));
+	vec2 dist = distToInt(coord);
 	vec2 smoothGrid = smoothstep(vec2(0), screenDelta, dist);
 	return min(smoothGrid.x, smoothGrid.y);
 }
@@ -73,17 +65,18 @@ float function(float x)
 //	y = floor(x); // step 10 nearest integer less than or equal to x
 //	y = sign(x); // step 11 extract the sign of x
 	vec2 mouse = iMouse.xy / u_resolution;
-//	y = 5 * mouse.y * sin(x * mouse.x * 5); // step 12 
-//	y = trunc(x); // step 13 
-	// y = abs(sin(x)); // step 14 
-	// y = fract(sin(x) * 1234567.0); // step 15 
+	y = 5 * mouse.y * sin(x * mouse.x * 5); // step 12 
+	y = sin(x*x*x)*sin(x);
+	// y = trunc(x); // step 13 
+//	y = abs(sin(x)); // step 14 
+//	y = fract(sin(x) * 1234567.0); // step 15 
 //	y = ceil(sin(x)) + floor(sin(x)); // step 16 
-	// y = sign(sin(x)) * pow(sin(x), 9.0); // step 17 
+//	y = sign(sin(x)) * pow(sin(x), 9.0); // step 17 
 	// y = exp(-0.4 * abs(x)) * 1 * cos(2 * x); // step 18 
 //	y = mod(x + 1, 2.0) - 1; // step 19 
 //	y = abs(mod(x + 1, 2.0) - 1); // step 20 repeated tent
 //	y = step(2, mod(x, 4.0)); // step 21 repeat step
-	// y = x - fract(x) + smoothstep(0, 0.25, fract(x)); // staircase
+//	y = x - fract(x) + smoothstep(0, 0.25, fract(x)); // staircase
 //	y = smoothstep(-0.5, 1, cos(x)) * 2; // step 22 
 	float fact = 1;
 //	y = floor(x / fact); // step 23 
@@ -91,24 +84,16 @@ float function(float x)
 //	y = x - floor(0.5 + x / fact) * fact; // step 25 
 //	y = cos(x - floor(0.5 + x / fact) * fact); // step 26 
 	// y = distToInt(x); // step 27 
-	// y = step(1, x) - step(2, x); // step 28 
+//	y = step(1, x) - step(2, x); // step 28 
 //	y = step(1, mod(x, 2)); // step 29 
-	// y = opRepeat(vec3(x), vec3(2)).x; // step 30 
+//	y = opRepeat(vec3(x), vec3(2)).x; // step 30 
 //	y = sin(x) + 0.1 * sin(16*x + mouse.x * 100); // step 31 
-	// y = rand(x); // step 32
+//	 y = rand(x); // step 32
 	// y = rand(ceil(x + 0.5)) * 5; // step 33
-	// y = noise(x - mouse.x * 30); // step 34
+//	y = noise(x - mouse.x * 30); // step 34
 //	y = gnoise(x - mouse.x * 30); // step 34
-	// y = noise(x + mouse.x * 100) + 0.1 * noise(16*x); // step 35 
+//	y = noise(x + mouse.x * 100) + 0.1 * noise(16*x); // step 35 
 	return y;
-}
-
-float distPointLine(vec2 point, vec2 a, vec2 b)
-{
-	vec2 ab = b - a;
-	float numerator = abs(ab.y * point.x - ab.x * point.y + b.x * a.y - b.y * a.x);
-	float denominator = length(ab);
-	return numerator / denominator;
 }
 
 //draw function line
@@ -117,34 +102,28 @@ float plotFunction(vec2 coord, vec2 screenDelta)
 	float f = function(coord.x) - coord.y;
 	float dist = abs(f);
 	
-	return 1 - step(0.1, dist);
-	// return 1 - smoothstep(0, screenDelta.y, dist);
+//	return 1 - step(0.1, dist);
+//	return 1 - smoothstep(0, screenDelta.y, dist);
 
-	// vec2 gradient = vec2(dFdx(f), dFdy(f));
-	// float filterWidth = length(gradient) * 2.0;
-	// return 1 - smoothstep(0, filterWidth, dist);
-
-	//use central difference to make a line approximation
-	// float ax = coord.x - EPSILON;
-	// float bx = coord.x + EPSILON;
-	// vec2 a = vec2(ax, function(ax));
-	// vec2 b = vec2(bx, function(bx));
-	// float dist = distPointLine(coord, a, b);
-	// return 1 - smoothstep(0, screenDelta.y, dist);
+	vec2 gradient = vec2(dFdx(f), dFdy(f));
+	float filterWidth = length(gradient) * 2.0;
+	return 1 - smoothstep(0, filterWidth, dist);
 }
 
 out vec4 fragColor;
 void main() {
 	//map coordinates in range [0,1]
-	vec2 coord01 = gl_FragCoord.xy/u_resolution;
+	vec2 coord01 = gl_FragCoord.xy / u_resolution;
 	//screen aspect
-	float aspect = 1;//u_resolution.x / u_resolution.y;
+	vec2 aspectScale = vec2(u_resolution.x / u_resolution.y, 1.0);
 	//coordinate system corners
 	float delta = 8;
-	vec2 lowerLeft = vec2(-delta * aspect, -delta);
-	vec2 upperRight = vec2(delta * aspect, delta);
+	vec2 lowerLeft = vec2(-delta, -delta) * aspectScale;
+	vec2 upperRight = vec2(delta, delta) * aspectScale;
 	//setup coordinate system
-	vec2 coord = map(coord01, lowerLeft, upperRight);
+	// maps normalized [0..1] coordinates 
+	// into range [lowerLeft, upperRight]
+	vec2 coord = mix(lowerLeft, upperRight, coord01);
 	//calculate just visible screen deltas
 	vec2 screenDelta = screenDelta(u_resolution, lowerLeft, upperRight);
 
