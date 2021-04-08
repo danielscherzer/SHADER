@@ -23,7 +23,7 @@ void main()
 	float a = atan(uv.y, uv.x) + PI; //angel of current pixel [0..2*PI] 
 	
 	float f = a / TWOPI;
-//	f = cos(4 * a); // step 2 
+	f = cos(4 * a); // step 2 
 //	f = abs(cos(4 * a)); // step 3 
 //	f = abs(cos(2.5 * a)) * 0.6 + 0.3; // step 6 
 //	f = abs(cos(4 * a) * sin(3 * a)) * 0.8 + 0.1; // step 7 

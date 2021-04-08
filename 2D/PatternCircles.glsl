@@ -1,8 +1,6 @@
-#version 140
-// idea from http://thebookofshaders.com/edit.php#09/marching_dots.frag
-
 uniform vec2 u_resolution;
-uniform float iGlobalTime;
+uniform float u_time;
+// idea from http://thebookofshaders.com/edit.php#09/marching_dots.frag
 
 float circle(vec2 coord, float radius)
 {
@@ -19,21 +17,21 @@ float repeatStep(float x, float width)
 
 float move(float time)
 {
-	float timeStepped = time * repeatStep(time, 2);
+	float timeStepped = time * repeatStep(time, 2.0);
 	return timeStepped;
 }
 
 float direction(float x)
 {
-	float uneven = step(1, mod(x, 2));
+	float uneven = step(1.0, mod(x, 2.0));
 	return sign(uneven - 0.5);
 }
 
 //coordinates in range [0,1] return color
 vec3 mainImage(vec2 coord) {
-	coord *= 10;
-	coord.x += direction(coord.y) * move(iGlobalTime);
-	coord.y += direction(coord.x) * move(iGlobalTime - 1);
+	coord *= 10.0;
+	coord.x += direction(coord.y) * move(u_time);
+	coord.y += direction(coord.x) * move(u_time - 1.0);
 
 	coord = fract(coord);
 	
@@ -43,7 +41,7 @@ vec3 mainImage(vec2 coord) {
 
 void main() {
 	//coordinates in range [0,1]
-	vec2 coord = gl_FragCoord.xy/u_resolution;
+	vec2 coord = gl_FragCoord.xy / u_resolution;
 	coord.x *= u_resolution.x / u_resolution.y; //aspect
 	gl_FragColor = vec4(mainImage(coord), 1.0);
 }

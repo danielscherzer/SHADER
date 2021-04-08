@@ -6,9 +6,9 @@
 #include "../libs/Noise.glsl"
 #include "../libs/operators.glsl"
 
-uniform vec3 iMouse;
+uniform vec2 u_mouse;
 uniform vec2 u_resolution;
-uniform float iGlobalTime;
+
 in vec2 uv;
 
 const float PI = 3.14159265359;
@@ -64,9 +64,9 @@ float function(float x)
 //	y = ceil(x); // step 9 nearest integer that is greater than or equal to x
 //	y = floor(x); // step 10 nearest integer less than or equal to x
 //	y = sign(x); // step 11 extract the sign of x
-	vec2 mouse = iMouse.xy / u_resolution;
-	y = 5 * mouse.y * sin(x * mouse.x * 5); // step 12 
-	y = sin(x*x*x)*sin(x);
+	vec2 mouse = u_mouse.xy / u_resolution;
+	y = 7 * mouse.y * sin(x * mouse.x * 10); // step 12 
+//	y = sin(x*x*x)*sin(x);
 	// y = trunc(x); // step 13 
 //	y = abs(sin(x)); // step 14 
 //	y = fract(sin(x) * 1234567.0); // step 15 
@@ -99,13 +99,14 @@ float function(float x)
 //draw function line
 float plotFunction(vec2 coord, vec2 screenDelta)
 {
-	float f = function(coord.x) - coord.y;
-	float dist = abs(f);
-	
+	float f = function(coord.x);
+	float delta = f - coord.y;
+	float dist = abs(delta);
+//	return dist;
 //	return 1 - step(0.1, dist);
 //	return 1 - smoothstep(0, screenDelta.y, dist);
 
-	vec2 gradient = vec2(dFdx(f), dFdy(f));
+	vec2 gradient = vec2(dFdx(delta), dFdy(delta));
 	float filterWidth = length(gradient) * 2.0;
 	return 1 - smoothstep(0, filterWidth, dist);
 }

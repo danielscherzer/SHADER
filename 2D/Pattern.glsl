@@ -27,9 +27,9 @@ float rectFunc(float x, float from, float to)
 
 float grid(in vec2 coord)
 {
-//	coord *= 10; // step 1 
+	coord *= 10; // step 1 
 	float unevenRow = step(1, mod(coord.y, 2));
-//	coord.x += unevenRow * 0.5; // step 2 
+	coord.x += unevenRow * 0.5; // step 2 
 	
 	float row7 = rectFunc(coord.y, 6, 7);
 	float col4 = rectFunc(coord.x, 3, 4);
@@ -37,7 +37,7 @@ float grid(in vec2 coord)
 	
 	coord = fract(coord);
 	coord -= 0.5;
-//	coord = rotate2D(coord, element47 * iGlobalTime); // step 3 
+	coord = rotate2D(coord, element47 * iGlobalTime); // step 3 
 	coord += 0.5;
 	return smoothBox(coord, vec2(0.9, 0.9), 0.01);
 }

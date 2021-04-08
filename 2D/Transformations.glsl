@@ -1,14 +1,14 @@
 #version 140
 
 uniform vec2 u_resolution;
-uniform float iGlobalTime;
+uniform float u_time;
 
-float min(vec2 v)
+float minE(vec2 v)
 {
 	return min(v.x, v.y);
 }
 
-float max(vec2 v)
+float maxE(vec2 v)
 {
 	return max(v.x, v.y);
 }
@@ -16,20 +16,37 @@ float max(vec2 v)
 float grid(vec2 coord, float thickness)
 {
 	vec2 distInt = abs(fract(coord + 0.5) - 0.5);
-	return smoothstep(0.0, thickness, min(distInt));
+	return smoothstep(0.0, thickness, minE(distInt));
 }
 
 float frame(vec2 coord, float thickness)
 {
-	float grid = grid(coord, thickness);
+	float dGrid = grid(coord, thickness);
 	float grid10 = grid(0.1 * coord, 0.1 * 2.0 * thickness);
-	float axis = smoothstep(0.0, 4.0 * thickness, min(abs(coord)));
-	return axis * grid * grid10;
+	float axis = smoothstep(0.0, 4.0 * thickness, minE(abs(coord)));
+	return axis * dGrid * grid10;
 }
 
 mat2 rotate(float radiant)
 {
 	return mat2(cos(radiant), -sin(radiant), sin(radiant), cos(radiant));
+}
+
+mat2 interpolate(mat2 a, mat2 b, float weight)
+{
+	weight = clamp(weight, 0.0, 1.0);
+	return (1- weight) * a + weight * b;
+}
+
+//draw function line
+float plotFunction(vec2 coordIn, vec2 coordOut)
+{
+	vec2 dist = abs(coordOut - coordIn);
+	float f = length(dist);
+	
+	vec2 gradient = vec2(dFdx(f), dFdy(f));
+	float filterWidth = length(gradient) * 2.0;
+	return 1 - smoothstep(0, filterWidth, f);
 }
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord)
@@ -47,14 +64,15 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 	// into range [lowerLeft, upperRight]
 	vec2 coord = mix(lowerLeft, upperRight, coord01);
 
-	float thickness = max((upperRight - lowerLeft) / u_resolution);
+	float thickness = maxE((upperRight - lowerLeft) / u_resolution);
+	
 	float grid_world = frame(coord, thickness);
-	coord += 0.2;
-	coord = rotate(1.8) * coord;
+//	mat2 mtx = rotate(0.5 * 3.1415);
+	mat2 mtx = inverse(mat2(1, 2, -3, 4));
+	coord = interpolate(mat2(1), mtx, u_time) * coord;
 	float grid2 = frame(coord, thickness);
 
 	vec3 color = vec3(grid_world);
-//	color = vec3(grid2);
 	color = mix(color, vec3(0.0, 0.3, 0.0), 1.0 - grid2);
 
 //	fragColor = vec4(grid_world, 1.0);
