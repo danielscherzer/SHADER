@@ -4,16 +4,39 @@
 #include "../libs/operators.glsl"
 
 uniform vec2 u_resolution;
+uniform float iGlobalTime;
 
-const float epsilon = 1e-3;
-const int maxSteps = 1024;
+const float epsilon = 1e-6;
+const int maxSteps = 256;
+
+float DFBox(vec3 point, vec3 origin, vec3 size, float roundness)
+{
+    vec3 d = abs(point - origin) - size;
+    return length(max(d, 0.0)) - roundness
+        + min(max(d.x,max(d.y,d.z)),0.0);
+}
+
+float stairs(vec3 point)
+{
+    // room
+    vec3 roomSize = vec3(2.0, 1.5, 20.0);
+    vec3 roomOrigin = vec3(0.0, 1.5, 0.0);
+
+    vec3 roomPoint = point;
+    float stepCount = 5.0;
+    float stepDepth = 0.30;
+    float stepHeight = 0.18;
+    float stairIndex = ceil((1.0 / stepDepth) * (point.z - 4.0));
+    // roomPoint.y -= clamp(stairIndex * stepHeight, 0.0, stepCount * stepHeight);
+
+	return DFBox(roomPoint, roomOrigin, roomSize, 0.0);
+}
 
 float distField(vec3 point)
 {
-	point.x += 11.0;
-	point.z -= 12.0;
-	float bigBox = sBox(point, vec3(0, 0, 0), vec3(10, 10, 10));
-	// return dist1;
+	float height = ceil(4 * point.z) * 0.1;
+	float bigBox = sBox(point, vec3(0, -1, 0), vec3(1, height, 1));
+	return bigBox;
 	vec3 repXY = opRepeatCentered(point, vec3(.5, .5, 1));
 	float dist2 = sBox(repXY, vec3(0, 0, 0), vec3(0.1, 0.1, 10));
 	// return dist2;
@@ -22,7 +45,10 @@ float distField(vec3 point)
 	// return dist3;
 	float distCutOut = opUnion(dist2, dist3);
 	// return distCutOut;
-	return opDifference(bigBox, distCutOut);
+	float building = opDifference(bigBox, distCutOut);
+
+	return building;
+	return stairs(point);
 }
 
 float ambientOcclusion(vec3 point, float delta, int samples)
@@ -41,6 +67,7 @@ out vec3 color;
 void main()
 {
 	vec3 camP = calcCameraPos();
+	camP.z -= 2;
 	vec3 camDir = calcCameraRayDir(80.0, gl_FragCoord.xy, u_resolution);
 
 	//start point is the camera position

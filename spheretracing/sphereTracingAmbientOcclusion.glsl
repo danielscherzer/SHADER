@@ -15,7 +15,7 @@ float distTentacle(vec3 point)
 {
 	float rr = dot(point.xy, point.xy);
 	float dist = 10e7;
-	for(int i = 0; i < 6; ++i)
+	for(int i = 0; i < 3; ++i)
 	{
 		vec3 p2 = rotateY( point, TAU * i / 6.0 + 0.04 * rr  );
 		p2.y -= 3 * rr * exp2(-10.0 * rr);
@@ -68,7 +68,7 @@ float ambientOcclusion(vec3 point, float delta, int samples)
 	{
 		occ += (2.0/i) * (i * delta - distField(point + i * delta * normal));
 	}
-	// occ = clamp(occ, 0, 1);
+	//occ = clamp(occ, 0, 1);
 	return 1 - occ;
 }
 
@@ -106,7 +106,7 @@ void main()
 	{
 		vec3 material = vec3(1); //white
 		//the usual lighting is boring
-		vec3 normal = getNormal(point, 0.01);
+		vec3 normal = getNormal(point, 0.001);
 		vec3 lightDir = normalize(vec3(0, -1.0, 1));
 		vec3 toLight = -lightDir;
 		float diffuse = max(0, dot(toLight, normal));
