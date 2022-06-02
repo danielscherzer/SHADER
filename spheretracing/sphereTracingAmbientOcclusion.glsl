@@ -17,9 +17,11 @@ float distTentacle(vec3 point)
 	float dist = 10e7;
 	for(int i = 0; i < 3; ++i)
 	{
-		vec3 p2 = rotateY( point, TAU * i / 6.0 + 0.04 * rr  );
+		vec3 p2 = point;
+		pR( p2.xz, TAU * i / 6.0 + 0.04 * rr  );
 		p2.y -= 3 * rr * exp2(-10.0 * rr);
-		vec3 p3 = rotateZ(p2, PI / 2);
+		vec3 p3 = p2;
+		pR(p3.xy, PI / 2);
 		float cylinder = fCylinder(p3, 0.1, 30.0);
 		dist = min( dist, cylinder );
 	}
